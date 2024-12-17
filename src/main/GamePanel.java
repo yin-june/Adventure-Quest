@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
                 drawCount++; 
             }
             if(timer >= Math.pow(10,9)){
-                System.out.println("FPS: " + drawCount);
+                //System.out.println("FPS: " + drawCount);
                 drawCount = 0; 
                 timer = 0; 
             }

@@ -11,6 +11,8 @@ public class main {
         window.setTitle("Adventure Quest"); 
         
         new menu().mainFrame(); 
+        
+        //uncomment to view character + movement 
         /* 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel); 
@@ -22,6 +24,7 @@ public class main {
         
         gamePanel.startGameThread(); 
         */
+
     }
     
 }
