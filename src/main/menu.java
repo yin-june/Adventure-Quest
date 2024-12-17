@@ -99,6 +99,7 @@ public class menu {
         mainFrame.setSize(768,576); 
         mainFrame.setResizable(false);
         mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
@@ -107,7 +108,18 @@ public class menu {
         JTextField nameField = new JTextField(30);
         JTextField HPField = new JTextField(30);
         JTextField AttackPowerField = new JTextField(30);
+        JRadioButton mage = new JRadioButton("Mage");
+        RadioButton(mage);
+        JRadioButton warrior = new JRadioButton("Warrior");
+        RadioButton(warrior);
+        JRadioButton archer = new JRadioButton("Archer");
+        RadioButton(archer);
         JButton createHeroButton = new JButton("Create Hero");
+
+        ButtonGroup heroTypeGroup = new ButtonGroup();
+        heroTypeGroup.add(mage);
+        heroTypeGroup.add(warrior);
+        heroTypeGroup.add(archer);
 
         Button(createHeroButton);
         createHeroButton.addActionListener(new ActionListener() {
@@ -116,9 +128,23 @@ public class menu {
                 String name = nameField.getText();
                 String HP = HPField.getText();
                 String AttackPower = AttackPowerField.getText();
+                String heroType = null;
+
+                if (mage.isSelected()) {
+                    heroType = "Mage";
+                } else if (warrior.isSelected()) {
+                    heroType = "Warrior";
+                } else if (archer.isSelected()) {
+                    heroType = "Archer";
+                }
+
                 try {
                     if (name.isEmpty() || HP.isEmpty() || AttackPower.isEmpty()) {
                         JOptionPane.showMessageDialog(createHeroFrame, "The field cannot be empty!");
+                        return;
+                    }
+                    if(heroType == null){
+                        JOptionPane.showMessageDialog(createHeroFrame, "You must choose your hero type!");
                         return;
                     }
                     int hpValue = Integer.parseInt(HP);
@@ -131,7 +157,7 @@ public class menu {
                         JOptionPane.showMessageDialog(createHeroFrame, "Attack Power must be between 10 and 30!");
                         return;
                     }
-                        JOptionPane.showMessageDialog(createHeroFrame, "You create your hero successfully!");
+                        JOptionPane.showMessageDialog(createHeroFrame, "You've created your hero successfully!");
                         createHeroFrame.setVisible(false);
                         ChooseYourGameLevelFrame();
                 }catch (NumberFormatException | IOException a){
@@ -155,13 +181,25 @@ public class menu {
         AttackPowerPanel.add(AttackPowerLabel);
         AttackPowerPanel.add(AttackPowerField);
 
+        JLabel heroType = new JLabel("Choose Hero Type:");
+        Label(heroType);
+
         Box createFrameBox = Box.createVerticalBox();
         createFrameBox.add(namePanel);
-        createFrameBox.add(Box.createVerticalStrut(50));
+        createFrameBox.add(Box.createVerticalStrut(30));
         createFrameBox.add(HPPanel);
-        createFrameBox.add(Box.createVerticalStrut(50));
+        createFrameBox.add(Box.createVerticalStrut(30));
         createFrameBox.add(AttackPowerPanel);
-        createFrameBox.add(Box.createVerticalStrut(50));
+        createFrameBox.add(Box.createVerticalStrut(30));
+        createFrameBox.add(heroType);
+        Box heroTypeBox = Box.createHorizontalBox();
+        heroTypeBox.add(mage);
+        heroTypeBox.add(Box.createHorizontalStrut(20)); 
+        heroTypeBox.add(warrior);
+        heroTypeBox.add(Box.createHorizontalStrut(20)); 
+        heroTypeBox.add(archer);
+        createFrameBox.add(heroTypeBox);
+        createFrameBox.add(Box.createVerticalStrut(30));
         createFrameBox.add(createHeroButton);
        
         createCanvas.setLayout(new GridBagLayout());
@@ -171,6 +209,7 @@ public class menu {
         createHeroBackground = ImageIO.read(new File("src\\image\\dungeon3.jpg"));
         createHeroFrame.add(createCanvas);
         createHeroFrame.setSize(768,576);
+        createHeroFrame.setLocationRelativeTo(null);
         createHeroFrame.setResizable(false);
         createHeroFrame.setVisible(true);
         createHeroFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -195,9 +234,7 @@ public class menu {
         Box chooseLevelBox = Box.createVerticalBox();
 
         JLabel chooseLevelLabel = new JLabel("Level", SwingConstants.CENTER);
-        chooseLevelLabel.setFont(new Font("ROG Fonts", Font.BOLD, 30));
-        chooseLevelLabel.setForeground(Color.WHITE); // Set the color of the text
-        chooseLevelLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Align the label at the center
+        Label(chooseLevelLabel);
         chooseLevelBox.add(chooseLevelLabel);
         chooseLevelBox.add(Box.createVerticalStrut(20)); // Add some space below the label
 
@@ -215,6 +252,7 @@ public class menu {
         ChooseYourGameLevelFrame.setVisible(true);
         ChooseYourGameLevelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ChooseYourGameLevelFrame.setSize(new Dimension(768,576));
+        ChooseYourGameLevelFrame.setLocationRelativeTo(null);
         ChooseYourGameLevelFrame.setResizable(false);
     }
 
@@ -224,6 +262,18 @@ public class menu {
         button.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 20));
         button.setPreferredSize(new Dimension(200, 50));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    public void RadioButton(JRadioButton radioButton){
+        radioButton.setBackground(new Color(60,46,30));
+        radioButton.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 20));
+        radioButton.setForeground(Color.WHITE);
+    }
+
+    public void Label(JLabel label){
+        label.setFont(new Font("ROG Fonts", Font.BOLD, 30));
+        label.setForeground(Color.WHITE); // Set the color of the text
+        label.setAlignmentX(Component.CENTER_ALIGNMENT); // Align the label at the center
     }
 
     /*

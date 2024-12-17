@@ -1,7 +1,6 @@
 package main;
 
 import java.io.IOException;
-import java.util.Scanner;
 import javax.swing.JFrame;
 
 public class main {
@@ -11,16 +10,8 @@ public class main {
         window.setResizable(false); 
         window.setTitle("Adventure Quest"); 
         
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Choose your game pattern: ");
-        System.out.println("1. Text Game");
-        System.out.println("2. GUI Game");
-        int choice = sc.nextInt();
-        if(choice == 2){
-            new menu().mainFrame();
-        }
-        sc.close(); 
-        
+        new menu().mainFrame(); 
+        /* 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel); 
         
@@ -30,6 +21,7 @@ public class main {
         window.setVisible(true); 
         
         gamePanel.startGameThread(); 
+        */
     }
     
 }
