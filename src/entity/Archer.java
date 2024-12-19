@@ -9,7 +9,7 @@ import main.KeyHandler;
 
 
 public class Archer extends entity {
-        GamePanel gp; 
+    GamePanel gp; 
     KeyHandler keyH; 
     
     public Archer(GamePanel gp, KeyHandler keyH){

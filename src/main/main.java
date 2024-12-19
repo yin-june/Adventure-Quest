@@ -13,7 +13,7 @@ public class main {
         new menu().mainFrame(); 
         
         //uncomment to view character + movement 
-        /* 
+        
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel); 
         
@@ -23,7 +23,7 @@ public class main {
         window.setVisible(true); 
         
         gamePanel.startGameThread(); 
-        */
+        
 
     }
     
