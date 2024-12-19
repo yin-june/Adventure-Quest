@@ -7,8 +7,8 @@ import main.KeyHandler;
 
 public class Mage extends Hero{
     
-    public Mage(GamePanel gp, KeyHandler keyH){
-        super(gp, keyH); 
+    public Mage(GamePanel gp, KeyHandler keyH, String name, int attackPower, int hp){
+        super(gp, keyH, name, attackPower, hp, "Mage"); 
         
     }
     

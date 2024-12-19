@@ -7,8 +7,8 @@ import main.KeyHandler;
 
 
 public class Archer extends Hero {
-    public Archer(GamePanel gp, KeyHandler keyH) {
-        super(gp, keyH);
+    public Archer(GamePanel gp, KeyHandler keyH, String name, int attackPower, int hp) {
+        super(gp, keyH, name, attackPower, hp, "Archer");
     }
 
     @Override

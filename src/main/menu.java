@@ -11,11 +11,16 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class menu {
+    private String name;
+    private int heroHP;
+    private int heroAttackPower;
+    private String heroType;
     JFrame mainFrame = new JFrame("AdventureQuestGame");
     JButton enterGame = new JButton("Enter Game");
     JButton exitGame = new JButton("Exit Game");
     JFrame createHeroFrame = new JFrame("CreateYourHero");
     JFrame ChooseYourGameLevelFrame = new JFrame("ChooseYourGameLevel");
+    JFrame window = new JFrame();
 
     BufferedImage enterBackground;
     BufferedImage createHeroBackground;
@@ -125,10 +130,10 @@ public class menu {
         createHeroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText();
+                name = nameField.getText();
                 String HP = HPField.getText();
                 String AttackPower = AttackPowerField.getText();
-                String heroType = null;
+                heroType = null;
 
                 if (mage.isSelected()) {
                     heroType = "Mage";
@@ -147,19 +152,20 @@ public class menu {
                         JOptionPane.showMessageDialog(createHeroFrame, "You must choose your hero type!");
                         return;
                     }
-                    int hpValue = Integer.parseInt(HP);
-                    int attackPowerValue = Integer.parseInt(AttackPower);
-                    if (hpValue < 50 || hpValue > 150) {
+                    heroHP = Integer.parseInt(HP);
+                    heroAttackPower = Integer.parseInt(AttackPower);
+                    if (heroHP < 50 || heroHP> 150) {
                         JOptionPane.showMessageDialog(createHeroFrame, "HP value must be between 50 and 150!");
                         return;
                     }
-                    if (attackPowerValue < 10 || attackPowerValue > 30) {
+                    if (heroAttackPower < 10 || heroAttackPower > 30) {
                         JOptionPane.showMessageDialog(createHeroFrame, "Attack Power must be between 10 and 30!");
                         return;
                     }
                         JOptionPane.showMessageDialog(createHeroFrame, "You've created your hero successfully!");
                         createHeroFrame.setVisible(false);
                         ChooseYourGameLevelFrame();
+
                 }catch (NumberFormatException | IOException a){
                     JOptionPane.showMessageDialog(createHeroFrame, "HP and Attack Power must be valid numbers!");
                 }
@@ -231,6 +237,30 @@ public class menu {
         difficultPanel.add(difficult);
         Button(difficult);
 
+        easy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               ChooseYourGameLevelFrame.setVisible(false);
+               GameFrame();
+            }
+        });
+
+        medium.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChooseYourGameLevelFrame.setVisible(false);
+                GameFrame();
+            }
+        });
+
+        difficult.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChooseYourGameLevelFrame.setVisible(false);
+               GameFrame();
+            }
+        });
+
         Box chooseLevelBox = Box.createVerticalBox();
 
         JLabel chooseLevelLabel = new JLabel("Level", SwingConstants.CENTER);
@@ -256,6 +286,37 @@ public class menu {
         ChooseYourGameLevelFrame.setResizable(false);
     }
 
+    public void GameFrame(){
+       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        window.setResizable(false); 
+        window.setTitle("Adventure Quest"); 
+           
+        //uncomment to view character + movement 
+        
+        GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
+        window.add(gamePanel); 
+        
+        window.pack(); // window fits preferred size 
+        
+        window.setLocationRelativeTo(null);
+        window.setVisible(true); 
+        
+        gamePanel.startGameThread(); 
+        
+    }
+
+    // public void startGame(String level) {
+    //     // Create GamePanel with hero data and selected level
+    //     GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
+    //     mainFrame.getContentPane().removeAll();
+    //     mainFrame.add(gamePanel);
+    //     // mainFrame.revalidate();
+    //     // mainFrame.repaint();
+    //     gamePanel.setVisible(true);
+    //     gamePanel.setLocation(null);
+    //     gamePanel.startGameThread();
+    // }
+
     public void Button(JButton button){
         button.setBackground(new Color(60,46,30));
         button.setForeground(Color.WHITE);
@@ -274,6 +335,10 @@ public class menu {
         label.setFont(new Font("ROG Fonts", Font.BOLD, 30));
         label.setForeground(Color.WHITE); // Set the color of the text
         label.setAlignmentX(Component.CENTER_ALIGNMENT); // Align the label at the center
+    }
+
+    public static void main(String[] args) throws IOException {
+        new menu().mainFrame();
     }
 
     /*

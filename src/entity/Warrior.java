@@ -6,8 +6,8 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Warrior extends Hero {
-    public Warrior(GamePanel gp, KeyHandler keyH) {
-        super(gp, keyH);
+    public Warrior(GamePanel gp, KeyHandler keyH, String name, int attackPower, int hp) {
+        super(gp, keyH, name, attackPower, hp, "Warrior");
     }
 
     @Override

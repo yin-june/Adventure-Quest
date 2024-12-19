@@ -21,24 +21,36 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(); 
     
     Thread gameThread; 
-    // character class 
-    //Mage player = new Mage(this,keyH); 
-    //Warrior player = new Warrior(this,keyH);
-    Archer player = new Archer(this,keyH); 
+    Hero player; 
     
     // set player's default position
     int playerX = 100; 
     int playerY = 100; 
     int playerSpeed = 5; 
     
-    public GamePanel(){
+    public GamePanel(String name, int hp, int attackPower, String heroType){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); 
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true); 
+
+        // Initialize player based on heroType
+        switch (heroType) {
+            case "Mage":
+                player = new Mage(this, keyH, name, attackPower, hp);
+                break;
+            case "Warrior":
+                player = new Warrior(this, keyH, name, attackPower, hp);
+                break;
+            case "Archer":
+                player = new Archer(this, keyH, name, attackPower, hp);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid hero type: " + heroType);
+        }
     }
-    
+
     public void startGameThread(){
         gameThread = new Thread(this); 
         gameThread.start();

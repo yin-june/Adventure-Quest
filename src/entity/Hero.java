@@ -7,11 +7,19 @@ import main.*;
 public abstract class Hero extends entity {
     GamePanel gp;
     KeyHandler keyH;
-    BufferedImage upImage, downImage, leftImage, rightImage;
+    private String name;
+    private int attackPower;
+    private int hp;
+    private String heroType;
+    //BufferedImage upImage, downImage, leftImage, rightImage;
 
-    public Hero(GamePanel gp, KeyHandler keyH) {
+    public Hero(GamePanel gp, KeyHandler keyH, String name, int attackPower, int hp, String heroType) {
         this.gp = gp;
         this.keyH = keyH;
+        this.name = name;
+        this.attackPower = attackPower;
+        this.hp = hp;
+        this.heroType = heroType;
         setDefaultValues();
         getPlayerImage();
     }
@@ -26,16 +34,16 @@ public abstract class Hero extends entity {
     public abstract void getPlayerImage();
 
     public void update() {
-        if (keyH.upPressed) {
+        if (keyH.upPressed && y > 0) {
             direction = "up";
             y -= speed;
-        } else if (keyH.downPressed) {
+        } else if (keyH.downPressed && y < (576 - 50)) {
             direction = "down";
             y += speed;
-        } else if (keyH.leftPressed) {
+        } else if (keyH.leftPressed && x > 0) {
             direction = "left";
             x -= speed;
-        } else if (keyH.rightPressed) {
+        } else if (keyH.rightPressed && x<(768 - 40)) {
             direction = "right";
             x += speed;
         }
@@ -58,6 +66,39 @@ public abstract class Hero extends entity {
                 break;
         }
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+    }
+
+    // Getter and Setter methods
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public void setAttackPower(int attackPower) {
+        this.attackPower = attackPower;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public String getHeroType() {
+        return heroType;
+    }
+
+    public void setHeroType(String heroType) {
+        this.heroType = heroType;
     }
      
 }
