@@ -22,10 +22,11 @@ public abstract class Hero extends entity {
         this.heroType = heroType;
         setDefaultValues();
         getPlayerImage();
+        displayStats();
     }
 
     public void setDefaultValues() {
-        x = 100;
+        x = 0;
         y = 100;
         speed = 4;
         direction = "down";
