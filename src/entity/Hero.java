@@ -100,5 +100,23 @@ public abstract class Hero extends entity {
     public void setHeroType(String heroType) {
         this.heroType = heroType;
     }
-     
+    
+    public void attack(Hero target) {
+        target.takeDamage(this.attackPower);
+    }
+
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+    }
+
+    public void displayStats() {
+        System.out.println("Name: " + this.name);
+        System.out.println("Type: " + this.heroType);
+        System.out.println("HP: " + this.hp);
+        System.out.println("Attack Power: " + this.attackPower);
+    }
+
 }

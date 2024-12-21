@@ -20,7 +20,7 @@ public class menu {
     JButton exitGame = new JButton("Exit Game");
     JFrame createHeroFrame = new JFrame("CreateYourHero");
     JFrame ChooseYourGameLevelFrame = new JFrame("ChooseYourGameLevel");
-    JFrame window = new JFrame();
+    JFrame window = new JFrame(); //game panel
 
     BufferedImage enterBackground;
     BufferedImage createHeroBackground;
@@ -81,7 +81,7 @@ public class menu {
             }
         });
 
-        enterBackground = ImageIO.read(new File("src\\image\\dungeon1.jpg"));
+        enterBackground = ImageIO.read(new File("src/image/dungeon1.jpg"));
 
         // Add a label for "adventure quest"
         JLabel titleLabel = new JLabel("Adventure Quest", SwingConstants.CENTER);
@@ -212,7 +212,7 @@ public class menu {
         createCanvas.add(createFrameBox);
         createCanvas.repaint();
 
-        createHeroBackground = ImageIO.read(new File("src\\image\\dungeon3.jpg"));
+        createHeroBackground = ImageIO.read(new File("src/image/dungeon3.jpg"));
         createHeroFrame.add(createCanvas);
         createHeroFrame.setSize(768,576);
         createHeroFrame.setLocationRelativeTo(null);
@@ -274,7 +274,7 @@ public class menu {
         chooseLevelBox.add(Box.createVerticalStrut(40));
         chooseLevelBox.add(difficultPanel);
 
-        chooseLevelBackground = ImageIO.read(new File("src\\image\\dungeon3.jpg"));
+        chooseLevelBackground = ImageIO.read(new File("src/image/dungeon3.jpg"));
         chooseLevelCanvas.setLayout(new GridBagLayout());
         chooseLevelCanvas.add(chooseLevelBox);
         ChooseYourGameLevelFrame.add(chooseLevelCanvas);
@@ -287,11 +287,9 @@ public class menu {
     }
 
     public void GameFrame(){
-       window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         window.setResizable(false); 
         window.setTitle("Adventure Quest"); 
-           
-        //uncomment to view character + movement 
         
         GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
         window.add(gamePanel); 
@@ -301,21 +299,8 @@ public class menu {
         window.setLocationRelativeTo(null);
         window.setVisible(true); 
         
-        gamePanel.startGameThread(); 
-        
+        gamePanel.startGameThread();    
     }
-
-    // public void startGame(String level) {
-    //     // Create GamePanel with hero data and selected level
-    //     GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
-    //     mainFrame.getContentPane().removeAll();
-    //     mainFrame.add(gamePanel);
-    //     // mainFrame.revalidate();
-    //     // mainFrame.repaint();
-    //     gamePanel.setVisible(true);
-    //     gamePanel.setLocation(null);
-    //     gamePanel.startGameThread();
-    // }
 
     public void Button(JButton button){
         button.setBackground(new Color(60,46,30));
@@ -335,10 +320,6 @@ public class menu {
         label.setFont(new Font("ROG Fonts", Font.BOLD, 30));
         label.setForeground(Color.WHITE); // Set the color of the text
         label.setAlignmentX(Component.CENTER_ALIGNMENT); // Align the label at the center
-    }
-
-    public static void main(String[] args) throws IOException {
-        new menu().mainFrame();
     }
 
     /*
