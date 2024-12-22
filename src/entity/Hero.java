@@ -69,7 +69,7 @@ public abstract class Hero extends entity {
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
 
-    // Getter and Setter methods
+    // Player Stats
     public String getName() {
         return name;
     }
