@@ -115,7 +115,7 @@ public abstract class Hero extends entity {
 
     public void displayStats() {
         System.out.println("Name: " + this.name);
-        System.out.println("Type: " + this.heroType);
+        System.out.println("Hero Type: " + this.heroType);
         System.out.println("HP: " + this.hp);
         System.out.println("Attack Power: " + this.attackPower);
     }

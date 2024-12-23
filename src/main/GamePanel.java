@@ -19,21 +19,32 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60; 
     
     KeyHandler keyH = new KeyHandler(); 
-    
     Thread gameThread; 
     Hero player; 
+    StatsPanel statsPanel; 
     
     // set player's default position
-    int playerX = 100; 
-    int playerY = 100; 
-    int playerSpeed = 5; 
+    // int playerX = 100; 
+    // int playerY = 100; 
+    // int playerSpeed = 5; 
     
     public GamePanel(String name, int hp, int attackPower, String heroType){
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight)); 
-        this.setBackground(Color.BLACK);
-        this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
-        this.setFocusable(true); 
+        JPanel gameArea = new JPanel();
+        gameArea.setBackground(Color.red);
+        gameArea.setBounds(0,0,200,screenHeight);
+
+        //gameArea.setPreferredSize(new Dimension(screenWidth-400, screenHeight));
+        //gameArea.setDoubleBuffered(true);
+        //gameArea.setVisible(true);
+        //gameArea.addKeyListener(keyH);
+        //gameArea.setFocusable(true);
+
+         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); 
+         this.setBackground(Color.BLACK);
+         this.setDoubleBuffered(true);
+         this.addKeyListener(keyH);
+         this.setFocusable(true);
+
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -49,6 +60,27 @@ public class GamePanel extends JPanel implements Runnable{
             default:
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
+
+        statsPanel = new StatsPanel(player); 
+        statsPanel.setBounds(250,0,200,screenHeight);
+        
+        this.add(gameArea);
+        this.add(statsPanel);
+        setupFrame();
+        
+    }
+
+    private void setupFrame(){
+        JFrame gameFrame = new JFrame("Adventure Quest");
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFrame.setResizable(false);
+        gameFrame.setLayout(new BorderLayout());
+        gameFrame.add(this, BorderLayout.CENTER);
+        gameFrame.pack(); // window fits preferred size
+        gameFrame.setLocationRelativeTo(null);
+        gameFrame.setVisible(true);
+
+        startGameThread();
     }
 
     public void startGameThread(){
@@ -91,7 +123,9 @@ public class GamePanel extends JPanel implements Runnable{
     
     public void update(){
         player.update();
+        statsPanel.updateStats(); 
     }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         

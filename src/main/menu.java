@@ -20,7 +20,7 @@ public class menu {
     JButton exitGame = new JButton("Exit Game");
     JFrame createHeroFrame = new JFrame("CreateYourHero");
     JFrame ChooseYourGameLevelFrame = new JFrame("ChooseYourGameLevel");
-    JFrame window = new JFrame(); //game panel
+    //JFrame gameFrame = new JFrame(); //game panel
 
     BufferedImage enterBackground;
     BufferedImage createHeroBackground;
@@ -237,28 +237,19 @@ public class menu {
         difficultPanel.add(difficult);
         Button(difficult);
 
-        easy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               ChooseYourGameLevelFrame.setVisible(false);
-               GameFrame();
-            }
+        easy.addActionListener(e -> {
+            ChooseYourGameLevelFrame.setVisible(false);
+            new GamePanel(name, heroHP, heroAttackPower, heroType);
         });
 
-        medium.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ChooseYourGameLevelFrame.setVisible(false);
-                GameFrame();
-            }
+        medium.addActionListener(e -> {
+            ChooseYourGameLevelFrame.setVisible(false);
+            new GamePanel(name, heroHP, heroAttackPower, heroType);
         });
 
-        difficult.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ChooseYourGameLevelFrame.setVisible(false);
-               GameFrame();
-            }
+        difficult.addActionListener(e -> {
+            ChooseYourGameLevelFrame.setVisible(false);
+            new GamePanel(name, heroHP, heroAttackPower, heroType);
         });
 
         Box chooseLevelBox = Box.createVerticalBox();
@@ -286,21 +277,22 @@ public class menu {
         ChooseYourGameLevelFrame.setResizable(false);
     }
 
-    public void GameFrame(){
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        window.setResizable(false); 
-        window.setTitle("Adventure Quest"); 
+    // public void GameFrame(){
+    //     gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    //     gameFrame.setResizable(false); 
+    //     gameFrame.setTitle("Adventure Quest"); 
+    //     gameFrame.setLayout(new BorderLayout());
         
-        GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
-        window.add(gamePanel); 
+    //     GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
+    //     gameFrame.add(gamePanel); 
         
-        window.pack(); // window fits preferred size 
+    //     gameFrame.pack(); // window fits preferred size 
         
-        window.setLocationRelativeTo(null);
-        window.setVisible(true); 
+    //     gameFrame.setLocationRelativeTo(null);
+    //     gameFrame.setVisible(true); 
         
-        gamePanel.startGameThread();    
-    }
+    //     gamePanel.startGameThread();    
+    // }
 
     public void Button(JButton button){
         button.setBackground(new Color(60,46,30));
