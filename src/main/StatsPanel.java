@@ -12,8 +12,8 @@ public class StatsPanel extends JPanel{
 
     public StatsPanel(Hero player) {
         this.player = player;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setPreferredSize(new Dimension(200, 0)); // Fixed width for the stats panel
+        // this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // this.setPreferredSize(new Dimension(200, 0)); // Fixed width for the stats panel
         this.setBackground(Color.PINK);
 
 

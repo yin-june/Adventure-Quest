@@ -112,6 +112,10 @@ public abstract class Hero extends entity {
             this.hp = 0;
         }
     }
+    
+    public boolean isAlive() {
+        return this.hp > 0;
+    }
 
     public void displayStats() {
         System.out.println("Name: " + this.name);

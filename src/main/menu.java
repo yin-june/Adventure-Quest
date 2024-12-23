@@ -240,11 +240,13 @@ public class menu {
         easy.addActionListener(e -> {
             ChooseYourGameLevelFrame.setVisible(false);
             new GamePanel(name, heroHP, heroAttackPower, heroType);
+ 
         });
 
         medium.addActionListener(e -> {
             ChooseYourGameLevelFrame.setVisible(false);
             new GamePanel(name, heroHP, heroAttackPower, heroType);
+ 
         });
 
         difficult.addActionListener(e -> {

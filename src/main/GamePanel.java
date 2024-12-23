@@ -2,7 +2,7 @@ package main;
 
 import entity.*; 
 import java.awt.*;
-import javax.swing.*; 
+import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS 
@@ -22,16 +22,13 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread; 
     Hero player; 
     StatsPanel statsPanel; 
-    
-    // set player's default position
-    // int playerX = 100; 
-    // int playerY = 100; 
-    // int playerSpeed = 5; 
+    Dungeon dungeon;
+    JLabel roomLabel;
     
     public GamePanel(String name, int hp, int attackPower, String heroType){
-        JPanel gameArea = new JPanel();
-        gameArea.setBackground(Color.red);
-        gameArea.setBounds(0,0,200,screenHeight);
+        // JPanel gameArea = new JPanel();
+        // gameArea.setBackground(Color.RED);
+        // gameArea.setBounds(0,0,200,screenHeight);
 
         //gameArea.setPreferredSize(new Dimension(screenWidth-400, screenHeight));
         //gameArea.setDoubleBuffered(true);
@@ -44,7 +41,9 @@ public class GamePanel extends JPanel implements Runnable{
          this.setDoubleBuffered(true);
          this.addKeyListener(keyH);
          this.setFocusable(true);
+         this.setLayout(new BorderLayout());
 
+         dungeon = new Dungeon(3);
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -61,16 +60,30 @@ public class GamePanel extends JPanel implements Runnable{
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
 
+        // Main game area
+        JPanel gameArea = new JPanel();
+        gameArea.setBackground(Color.RED);
+        gameArea.setVisible(true);
+        gameArea.setLayout(null); // Use a null layout for custom rendering
+        this.add(gameArea, BorderLayout.CENTER);
+
         statsPanel = new StatsPanel(player); 
-        statsPanel.setBounds(250,0,200,screenHeight);
+        statsPanel.setVisible(true);
+        this.add(statsPanel, BorderLayout.EAST);
         
-        this.add(gameArea);
-        this.add(statsPanel);
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
+        controlPanel.setBackground(Color.GRAY);
+        controlPanel.setVisible(true);
+        roomLabel = new JLabel("Current Room: " + dungeon.getCurrentRoom());
+        controlPanel.add(roomLabel);
+        this.add(controlPanel, BorderLayout.SOUTH);
+
         setupFrame();
         
     }
 
-    private void setupFrame(){
+    public void setupFrame(){
         JFrame gameFrame = new JFrame("Adventure Quest");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setResizable(false);
@@ -134,5 +147,9 @@ public class GamePanel extends JPanel implements Runnable{
         
         g2.dispose();
         
+    }
+
+    private void updateRoomLabel() {
+        roomLabel.setText("Current Room: " + dungeon.getCurrentRoom());
     }
  }
