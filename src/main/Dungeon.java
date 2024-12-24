@@ -1,5 +1,6 @@
 package main;
 
+import entity.*;
 import java.util.Random;
 
 public class Dungeon {
@@ -21,7 +22,7 @@ public class Dungeon {
                     rooms[i] = "Empty Room";
                     break;
                 case 1:
-                    rooms[i] = "Monster Encounter";
+                    rooms[i] = generateMonster().getType()+ "Encounter";
                     break;
                 case 2:
                     rooms[i] = "Item Room";
@@ -30,6 +31,22 @@ public class Dungeon {
         }
     }
 
+    private Monster generateMonster(){
+        Random r =new Random(); 
+        int monsterType = r.nextInt(3); 
+        switch(monsterType){
+            case 0: 
+                return new Goblin();
+            case 1: 
+                return new Skeleton(); 
+            case 2: 
+                return new Zombie(); 
+            default:
+                return new Goblin(); //default to goblin if something goes wrong 
+                
+        }
+    }
+    
     public String getCurrentRoom() {
         return rooms[currentRoom];
     }

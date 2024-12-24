@@ -22,6 +22,18 @@ public class Monster {
     public void attack(Hero player) {
         player.takeDamage(this.attackPower);
     }
+    
+    public String getType(){
+        return type;
+    }
+    
+    public int getHp(){
+        return hp; 
+    }
+    
+    public int getAttackPower(){
+        return attackPower; 
+    }
 
     
 }
