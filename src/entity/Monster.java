@@ -1,6 +1,6 @@
 package entity;
 
-public class Monster {
+public abstract class Monster {
     String type;
     int hp;
     int attackPower;
