@@ -1,35 +1,47 @@
 package main;
 
-
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 public class Item {
-    private String name;  // 物品名称
-    private int effect;   // 物品效果
+    private String name = "dagger";
     private int x;        // 物品的 x 坐标
     private int y;        // 物品的 y 坐标
     private BufferedImage itemImage; // 物品图片
 
     // 构造方法
-    public Item(GamePanel gp,String name, int effect) throws IOException {
+    public Item(JPanel gp, String name) throws IOException {
         this.name = name;
-        this.effect = effect;
         direction(); // 随机生成初始位置
     }
 
-    // 获取名称
     public String getName() {
         return name;
     }
 
-    // 获取效果
-    public int getEffect() {
-        return effect;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
 
     // 随机方向（随机位置）
@@ -40,21 +52,28 @@ public class Item {
     }
 
     // 绘制物品
-    public void draw(Graphics2D g) throws IOException {
-        switch (name){
-            case "axe":
-                itemImage = ImageIO.read(new File("/image/axe.png"));
-                break;
-            case "dagger":
-                itemImage = ImageIO.read(new File("/image/dagger.png"));
-                break;
-            case "potion":
-                itemImage = ImageIO.read(new File("/image/potion.png"));
-                break;
-            default:
-                System.out.println("Don't have this item!");
+    public void draw(Graphics2D g) {
+        try {
+            switch (name){
+                case "axe":
+                    itemImage = ImageIO.read(new File("src/image/axe.png"));
+                    break;
+                case "dagger":
+                    itemImage = ImageIO.read(new File("src/image/dagger.png"));
+                    break;
+                case "potion":
+                    itemImage = ImageIO.read(new File("src/image/potion.png"));
+                    break;
+                default:
+                    System.out.println("Don't have this item!");
 
+            }
+        } catch (IOException e) {
+            System.out.println("Image file not exist!");
         }
         g.drawImage(itemImage, x, y, null);
+
     }
+
+
 }

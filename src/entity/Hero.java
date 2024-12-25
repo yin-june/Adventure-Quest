@@ -116,12 +116,12 @@ public abstract class Hero extends entity {
     public boolean isAlive() {
         return this.hp > 0;
     }
-
-    public void displayStats() {
-        System.out.println("Name: " + this.name);
-        System.out.println("Hero Type: " + this.heroType);
-        System.out.println("HP: " + this.hp);
-        System.out.println("Attack Power: " + this.attackPower);
+    
+    public String displayStats(){
+        return "Name: "+ name + 
+                "\nHero Type: "+heroType+ 
+                "\nHP: " +hp+
+                "\nAttack Power: "+ attackPower; 
     }
 
 }

@@ -2,6 +2,7 @@ package main;
 
 import entity.*; 
 import java.awt.*;
+import java.io.IOException;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -21,29 +22,19 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(); 
     Thread gameThread; 
     Hero player; 
-    StatsPanel statsPanel; 
     Dungeon dungeon;
     JLabel roomLabel;
+    Item item; 
     
-    public GamePanel(String name, int hp, int attackPower, String heroType){
-        // JPanel gameArea = new JPanel();
-        // gameArea.setBackground(Color.RED);
-        // gameArea.setBounds(0,0,200,screenHeight);
+    public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
+        InventoryPanel inventoryPanel = new InventoryPanel();
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
 
-        //gameArea.setPreferredSize(new Dimension(screenWidth-400, screenHeight));
-        //gameArea.setDoubleBuffered(true);
-        //gameArea.setVisible(true);
-        //gameArea.addKeyListener(keyH);
-        //gameArea.setFocusable(true);
-
-         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); 
-         this.setBackground(Color.BLACK);
-         this.setDoubleBuffered(true);
-         this.addKeyListener(keyH);
-         this.setFocusable(true);
-         this.setLayout(new BorderLayout());
-
-         dungeon = new Dungeon(3);
+        dungeon = new Dungeon(3);
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -60,40 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
 
-        // Main game area
-        JPanel gameArea = new JPanel();
-        gameArea.setBackground(Color.RED);
-        gameArea.setVisible(true);
-        gameArea.setLayout(null); // Use a null layout for custom rendering
-        this.add(gameArea, BorderLayout.CENTER);
-
-        statsPanel = new StatsPanel(player); 
-        statsPanel.setVisible(true);
-        this.add(statsPanel, BorderLayout.EAST);
-        
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout());
-        controlPanel.setBackground(Color.GRAY);
-        controlPanel.setVisible(true);
-        roomLabel = new JLabel("Current Room: " + dungeon.getCurrentRoom());
-        controlPanel.add(roomLabel);
-        this.add(controlPanel, BorderLayout.SOUTH);
-
-        setupFrame();
-        
-    }
-
-    public void setupFrame(){
-        JFrame gameFrame = new JFrame("Adventure Quest");
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.setResizable(false);
-        gameFrame.setLayout(new BorderLayout());
-        gameFrame.add(this, BorderLayout.CENTER);
-        gameFrame.pack(); // window fits preferred size
-        gameFrame.setLocationRelativeTo(null);
-        gameFrame.setVisible(true);
-
-        startGameThread();
+        item = new Item(this,"dagger"); 
     }
 
     public void startGameThread(){
@@ -136,7 +94,6 @@ public class GamePanel extends JPanel implements Runnable{
     
     public void update(){
         player.update();
-        statsPanel.updateStats(); 
     }
 
     public void paintComponent(Graphics g){
@@ -152,4 +109,9 @@ public class GamePanel extends JPanel implements Runnable{
     private void updateRoomLabel() {
         roomLabel.setText("Current Room: " + dungeon.getCurrentRoom());
     }
+    
+    public Hero getPlayer(){
+        return player;
+    }
+
  }
