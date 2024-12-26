@@ -1,7 +1,21 @@
 package entity;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class Goblin extends Monster{
     public Goblin(){
-        super("Goblin", 50, 10); //type, HP, attackPower
+        super("Goblin", 50, 10); //type, HP, attackPower 
+    }
+
+    @Override
+    public void getMonsterImage() {
+        try {
+            leftImage = ImageIO.read(new File("src/image/goblin_left.png"));
+            rightImage = ImageIO.read(new File("src/image/goblin_right.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

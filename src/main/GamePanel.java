@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     Dungeon dungeon;
     JLabel roomLabel;
     Item item; 
+    Monster monster;
     
     public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
@@ -102,13 +103,18 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
         item.draw(g2);
         
+        Monster currentMonster = dungeon.getCurrentRoomMonster();
+        if (currentMonster != null) {
+            currentMonster.draw(g2); // Draw the monster at its position
+        }
+        
         g2.dispose();
         
     }
 
-    private void updateRoomLabel() {
-        roomLabel.setText("Current Room: " + dungeon.getCurrentRoom());
-    }
+    // private void updateRoomLabel() {
+    //     roomLabel.setText("Current Room: " + dungeon.getCurrentRoom());
+    // }
     
     public Hero getPlayer(){
         return player;

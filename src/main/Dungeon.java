@@ -4,11 +4,11 @@ import entity.*;
 import java.util.Random;
 
 public class Dungeon {
-    private String[] rooms;
+    private Monster[] rooms;
     private int currentRoom;
 
     public Dungeon(int size) {
-        rooms = new String[size];
+        rooms = new Monster[size];
         generateDungeon();
         currentRoom = 0; // Start at the first room
     }
@@ -19,13 +19,19 @@ public class Dungeon {
             int encounter = rand.nextInt(3);
             switch (encounter) {
                 case 0:
-                    rooms[i] = "Empty Room";
+                    System.out.println("Empty room");
+                    rooms[i] = null; //empty room
                     break;
                 case 1:
-                    rooms[i] = generateMonster().getType()+ "Encounter";
+                    System.out.println("Monster encounter");
+                    Monster monster = generateMonster();
+                    monster.setPosition(rand.nextInt(GamePanel.SCREEN_WIDTH), rand.nextInt(GamePanel.SCREEN_HEIGHT));
+                    monster.setDirection(rand.nextBoolean() ? "left" : "right");
+                    rooms[i] = monster;
                     break;
                 case 2:
-                    rooms[i] = "Item Room";
+                    System.out.println("Item room");
+                    rooms[i] = null; //item room 
                     break;
             }
         }
@@ -47,7 +53,7 @@ public class Dungeon {
         }
     }
     
-    public String getCurrentRoom() {
+    public Monster getCurrentRoomMonster() {
         return rooms[currentRoom];
     }
 

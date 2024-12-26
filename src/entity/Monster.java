@@ -1,6 +1,9 @@
 package entity;
 
-public abstract class Monster {
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+public abstract class Monster extends entity {
     String type;
     int hp;
     int attackPower;
@@ -9,6 +12,7 @@ public abstract class Monster {
         this.type = type;
         this.hp = hp;
         this.attackPower = attackPower;
+        this.direction = "right";
     }
 
     public void takeDamage(int damage) {
@@ -35,5 +39,29 @@ public abstract class Monster {
         return attackPower; 
     }
 
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public abstract void getMonsterImage();
+
+    public void draw(Graphics2D g2) {
+        BufferedImage image = null;
+
+        switch (direction) {
+            case "left":
+                image = leftImage;
+                break;
+            case "right":
+                image = rightImage;
+                break;
+        }
+        g2.drawImage(image, x, y, null);
+    }
     
 }
