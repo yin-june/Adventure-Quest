@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class menu {
     private String name;
@@ -101,7 +100,7 @@ public class menu {
         enterCanvas.add(enterPanel);
         enterCanvas.repaint();
 
-        mainFrame.setSize(768,576); 
+        mainFrame.setSize(GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT); // 768 x 576 pixels
         mainFrame.setResizable(false);
         mainFrame.setVisible(true);
         mainFrame.setLocationRelativeTo(null);
@@ -214,7 +213,7 @@ public class menu {
 
         createHeroBackground = ImageIO.read(new File("src/image/dungeon3.jpg"));
         createHeroFrame.add(createCanvas);
-        createHeroFrame.setSize(768,576);
+        createHeroFrame.setSize(GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
         createHeroFrame.setLocationRelativeTo(null);
         createHeroFrame.setResizable(false);
         createHeroFrame.setVisible(true);
@@ -293,7 +292,7 @@ public class menu {
 
         ChooseYourGameLevelFrame.setVisible(true);
         ChooseYourGameLevelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ChooseYourGameLevelFrame.setSize(new Dimension(768,576));
+        ChooseYourGameLevelFrame.setSize(GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT);
         ChooseYourGameLevelFrame.setLocationRelativeTo(null);
         ChooseYourGameLevelFrame.setResizable(false);
     }
@@ -305,19 +304,20 @@ public class menu {
 
         JPanel mainPanel = new JPanel();
         GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
+        InventoryPanel inventoryPanel = new InventoryPanel();
 
         JPanel playerInfoPanel = new JPanel();
-        Dimension playerInfoSize = new Dimension(200,-1);
+        Dimension playerInfoSize = new Dimension(150,-1);
         playerInfoPanel.setPreferredSize(playerInfoSize);
         playerInfoPanel.setLayout(new BorderLayout());
 
         JTextArea infoArea = new JTextArea(gamePanel.getPlayer().displayStats());
         infoArea.setEditable(false);
         playerInfoPanel.add(BorderLayout.NORTH, infoArea);
+        playerInfoPanel.add(BorderLayout.CENTER,inventoryPanel);
 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(BorderLayout.EAST, playerInfoPanel);
-        mainPanel.add(BorderLayout.SOUTH,InventoryPanel.getMainInventory());
         mainPanel.add(BorderLayout.CENTER,gamePanel);
 
         gameFrame.add(mainPanel);

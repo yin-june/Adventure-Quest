@@ -7,15 +7,14 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS 
-    final int originalTileSize = 16; //16 x 16 tiles 
-    final int scale =3; 
+    public static final int ORIGINAL_TILE_SIZE = 16; // 16 x 16 tiles 
+    public static final int SCALE = 3; 
     
-    public final int tileSize = originalTileSize * scale; //48x48
-    final int maxScreenCol = 16; 
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol; //768 pixels
-    final int screenHeight = tileSize *maxScreenRow; //576 pixels
-    
+    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 48x48
+    public static final int MAX_SCREEN_COL = 16; 
+    public static final int MAX_SCREEN_ROW = 12;
+    public static final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; // 768 pixels
+    public static final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW; // 576 pixels
     //FPS 
     int FPS = 60; 
     
@@ -28,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     
     public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
@@ -101,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable{
         
         Graphics2D g2= (Graphics2D)g;
         player.draw(g2);
+        item.draw(g2);
         
         g2.dispose();
         

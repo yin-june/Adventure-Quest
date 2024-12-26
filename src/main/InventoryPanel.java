@@ -1,28 +1,32 @@
 package main;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import javax.swing.*;
 
 public class InventoryPanel extends JPanel{
-    static JPanel mainInventory = new JPanel();
+    JTextField inventoryTitle = new JTextField("Inventory");
+    JPanel textPanel = new JPanel();
     JPanel[] inventory = new JPanel[3];
     Item axeItem = new Item(this,"axe");
-    Item daggeerItem = new Item(this,"dagger");
+    Item daggerItem = new Item(this,"dagger");
     Item potionItem = new Item(this,"potion");
 
     public InventoryPanel() throws IOException {
-        this.setLayout(new GridLayout(1,5));
         this.setPreferredSize(new Dimension(-1,150));
+        Box verticalBox = Box.createVerticalBox();
+        textPanel.add(inventoryTitle);
+        verticalBox.add(textPanel);
         for (int i = 0; i < 3; i++) {
             inventory[i] = new JPanel();
-            inventory[i].setPreferredSize(new Dimension(100,100));
-            inventory[i].setLayout(new FlowLayout());
-            mainInventory.add(inventory[i]);
+            inventory[i].setPreferredSize(new Dimension(32,64));
+            verticalBox.add(inventory[i]);
         }
+        inventoryTitle.setEditable(false);
         inventory[0].add(new JLabel(addItem(axeItem)));
-        inventory[1].add(new JLabel(addItem(daggeerItem)));
+        inventory[1].add(new JLabel(addItem(daggerItem)));
         inventory[2].add(new JLabel(addItem(potionItem)));
+        this.add(verticalBox);
     }
 
     public ImageIcon addItem(Item item){
@@ -36,9 +40,5 @@ public class InventoryPanel extends JPanel{
             default:
                 return null;
         }
-    }
-
-    public static JPanel getMainInventory(){
-        return mainInventory;
     }
 }

@@ -38,13 +38,13 @@ public abstract class Hero extends entity {
         if (keyH.upPressed && y > 0) {
             direction = "up";
             y -= speed;
-        } else if (keyH.downPressed && y < (576 - 50)) {
+        } else if (keyH.downPressed && y < (GamePanel.SCREEN_HEIGHT - 50)) {
             direction = "down";
             y += speed;
         } else if (keyH.leftPressed && x > 0) {
             direction = "left";
             x -= speed;
-        } else if (keyH.rightPressed && x<(768 - 40)) {
+        } else if (keyH.rightPressed && x<(GamePanel.SCREEN_WIDTH - 40)) {
             direction = "right";
             x += speed;
         }
@@ -66,7 +66,7 @@ public abstract class Hero extends entity {
                 image = rightImage;
                 break;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, x, y, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
     }
 
     // Player Stats

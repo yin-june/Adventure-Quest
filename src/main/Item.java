@@ -47,8 +47,8 @@ public class Item {
     // 随机方向（随机位置）
     public void direction() {
         Random r = new Random();
-        this.x = r.nextInt(768); // 假设屏幕宽度为 768
-        this.y = r.nextInt(576); // 假设屏幕高度为 576
+        this.x = r.nextInt(GamePanel.SCREEN_WIDTH); // 假设屏幕宽度为 768
+        this.y = r.nextInt(GamePanel.SCREEN_HEIGHT); // 假设屏幕高度为 576
     }
 
     // 绘制物品
