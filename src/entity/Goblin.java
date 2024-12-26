@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 public class Goblin extends Monster{
     public Goblin(){
         super("Goblin", 50, 10); //type, HP, attackPower 
+        getMonsterImage();
     }
 
     @Override

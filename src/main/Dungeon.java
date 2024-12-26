@@ -1,14 +1,15 @@
 package main;
 
 import entity.*;
+import java.io.IOException;
 import java.util.Random;
 
 public class Dungeon {
-    private Monster[] rooms;
+    private Room[] rooms;
     private int currentRoom;
 
     public Dungeon(int size) {
-        rooms = new Monster[size];
+        rooms = new Room[size];
         generateDungeon();
         currentRoom = 0; // Start at the first room
     }
@@ -16,24 +17,14 @@ public class Dungeon {
     private void generateDungeon() {
         Random rand = new Random();
         for (int i = 0; i < rooms.length; i++) {
-            int encounter = rand.nextInt(3);
-            switch (encounter) {
-                case 0:
-                    System.out.println("Empty room");
-                    rooms[i] = null; //empty room
-                    break;
-                case 1:
-                    System.out.println("Monster encounter");
-                    Monster monster = generateMonster();
-                    monster.setPosition(rand.nextInt(GamePanel.SCREEN_WIDTH), rand.nextInt(GamePanel.SCREEN_HEIGHT));
-                    monster.setDirection(rand.nextBoolean() ? "left" : "right");
-                    rooms[i] = monster;
-                    break;
-                case 2:
-                    System.out.println("Item room");
-                    rooms[i] = null; //item room 
-                    break;
-            }
+            Monster monster = generateMonster();
+            monster.setPosition(rand.nextInt(GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT -50 ));
+            monster.setDirection(rand.nextBoolean() ? "left" : "right");
+
+            Item item = generateItem();
+
+            rooms[i] = new Room(monster, item);
+            
         }
     }
 
@@ -53,7 +44,19 @@ public class Dungeon {
         }
     }
     
-    public Monster getCurrentRoomMonster() {
+    private Item generateItem() {
+        Random rand = new Random();
+        String[] itemNames = {"axe", "dagger", "potion"};
+        String itemName = itemNames[rand.nextInt(itemNames.length)];
+        try {
+            return new Item(null, itemName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Return null if item creation fails
+        }
+    }
+    
+    public Room getCurrentRoom() {
         return rooms[currentRoom];
     }
 

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 public class Zombie extends Monster{
     public Zombie(){
         super("Zombie", 40,10); 
+        getMonsterImage();
     }
 
     @Override

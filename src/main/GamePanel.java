@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
 
-        item = new Item(this,"dagger"); 
+        //item = new Item(this,"dagger"); 
     }
 
     public void startGameThread(){
@@ -101,11 +101,18 @@ public class GamePanel extends JPanel implements Runnable{
         
         Graphics2D g2= (Graphics2D)g;
         player.draw(g2);
-        item.draw(g2);
         
-        Monster currentMonster = dungeon.getCurrentRoomMonster();
-        if (currentMonster != null) {
-            currentMonster.draw(g2); // Draw the monster at its position
+        Room currentRoom = dungeon.getCurrentRoom();
+        if (currentRoom != null) {
+            Monster currentMonster = currentRoom.getMonster();
+            if (currentMonster != null) {
+                currentMonster.draw(g2); // Draw the monster at its position
+            }
+
+            Item currentItem = currentRoom.getItem();
+            if (currentItem != null) {
+                currentItem.draw(g2); // Draw the item at its position
+            }
         }
         
         g2.dispose();

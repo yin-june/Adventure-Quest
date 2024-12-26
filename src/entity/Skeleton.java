@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 public class Skeleton extends Monster{
     public Skeleton(){
         super("Skeleton", 30, 10); 
+        getMonsterImage();
     }
 
     @Override

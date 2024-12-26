@@ -1,15 +1,15 @@
 package main;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Item {
-    private String name = "dagger";
+    private String name;
     private int x;        // 物品的 x 坐标
     private int y;        // 物品的 y 坐标
     private BufferedImage itemImage; // 物品图片
@@ -47,8 +47,8 @@ public class Item {
     // 随机方向（随机位置）
     public void direction() {
         Random r = new Random();
-        this.x = r.nextInt(GamePanel.SCREEN_WIDTH); // 假设屏幕宽度为 768
-        this.y = r.nextInt(GamePanel.SCREEN_HEIGHT); // 假设屏幕高度为 576
+        this.x = r.nextInt(GamePanel.SCREEN_WIDTH - 50); // 假设屏幕宽度为 768
+        this.y = r.nextInt(GamePanel.SCREEN_HEIGHT - 50); // 假设屏幕高度为 576
     }
 
     // 绘制物品
