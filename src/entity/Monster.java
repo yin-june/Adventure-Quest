@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import main.GamePanel;
 
 public abstract class Monster extends entity {
     String type;
@@ -61,7 +62,7 @@ public abstract class Monster extends entity {
                 image = rightImage;
                 break;
         }
-        g2.drawImage(image, x, y, null);
+        g2.drawImage(image, x, y, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
     }
     
 }

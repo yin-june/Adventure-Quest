@@ -1,8 +1,10 @@
 package main;
 
 import entity.*;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 public class Dungeon {
     private Room[] rooms;
@@ -22,8 +24,9 @@ public class Dungeon {
             monster.setDirection(rand.nextBoolean() ? "left" : "right");
 
             Item item = generateItem();
+            BufferedImage backgroundImage = generateBackgroundImage();
 
-            rooms[i] = new Room(monster, item);
+            rooms[i] = new Room(monster, item, backgroundImage);
             
         }
     }
@@ -54,6 +57,19 @@ public class Dungeon {
             e.printStackTrace();
             return null; // Return null if item creation fails
         }
+    }
+
+    public BufferedImage generateBackgroundImage(){
+        Random rand = new Random();
+        String[] backgroundImages = {"src/image/floor2.jpeg", "src/image/floor3.jpeg", "src/image/floor4.jpeg","src/image/floor5.jpeg"};
+        String backgroundImagePath = backgroundImages[rand.nextInt(backgroundImages.length)];
+        try {
+            return ImageIO.read(new File(backgroundImagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Return null if image loading fails
+        }
+
     }
     
     public Room getCurrentRoom() {

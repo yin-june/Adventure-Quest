@@ -2,6 +2,7 @@ package main;
 
 import entity.*; 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -25,14 +26,25 @@ public class GamePanel extends JPanel implements Runnable{
     JLabel roomLabel;
     Item item; 
     Monster monster;
+    BufferedImage background; 
     
     public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.setBackground(Color.BLACK);
+        //this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        // Load the background image
+        // try {
+        //     background = ImageIO.read(new File("src/image/floor5.jpeg"));
+        //     if (background != null) {
+        //         System.out.println("Background image loaded successfully.");
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
 
         dungeon = new Dungeon(3);
 
@@ -100,10 +112,18 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         
         Graphics2D g2= (Graphics2D)g;
-        player.draw(g2);
+        // if(background != null){
+        //     g2.drawImage(background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
+        // }
+        // player.draw(g2);
         
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {
+            BufferedImage backgroundImage = currentRoom.getBackgroundImage();
+            if (backgroundImage != null) {
+                g2.drawImage(backgroundImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
+            }
+
             Monster currentMonster = currentRoom.getMonster();
             if (currentMonster != null) {
                 currentMonster.draw(g2); // Draw the monster at its position
@@ -114,6 +134,8 @@ public class GamePanel extends JPanel implements Runnable{
                 currentItem.draw(g2); // Draw the item at its position
             }
         }
+        
+        player.draw(g2);
         
         g2.dispose();
         
