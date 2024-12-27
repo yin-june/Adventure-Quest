@@ -27,6 +27,9 @@ public class GamePanel extends JPanel implements Runnable{
     Item item; 
     Monster monster;
     BufferedImage background; 
+
+    // Timer variable to track the last time monsters were updated
+    //private long lastMonsterUpdateTime = 0;
     
     public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
@@ -35,16 +38,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-
-        // Load the background image
-        // try {
-        //     background = ImageIO.read(new File("src/image/floor5.jpeg"));
-        //     if (background != null) {
-        //         System.out.println("Background image loaded successfully.");
-        //     }
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
 
         dungeon = new Dungeon(3);
 
@@ -90,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
             
             if(delta >= 1){
                 // update infomation 
-                update();
+                update(currentTime);
                 // draw the screen with updated information 
                 repaint(); // call paint component 
                 delta--; 
@@ -104,18 +97,16 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
     
-    public void update(){
+    public void update(long currentTime) {
         player.update();
+        // Update monsters every frame
+        dungeon.updateMonster(currentTime);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
         Graphics2D g2= (Graphics2D)g;
-        // if(background != null){
-        //     g2.drawImage(background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
-        // }
-        // player.draw(g2);
         
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {

@@ -91,5 +91,14 @@ public class Dungeon {
     public int getCurrentRoomIndex() {
         return currentRoom;
     }
+
+    public void updateMonster(long currentTime) {
+        for (Room room : rooms) {
+            if (room != null && room.getMonster() != null) {
+                room.getMonster().move();
+                room.getMonster().updateDirection(currentTime);
+            }
+        }
+    }
     
 }
