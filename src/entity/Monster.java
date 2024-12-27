@@ -16,7 +16,7 @@ public abstract class Monster extends entity {
         this.hp = hp;
         this.attackPower = attackPower;
         this.direction = "right";
-        this.speed = 5; 
+        this.speed = 3; 
     }
 
     public void takeDamage(int damage) {
