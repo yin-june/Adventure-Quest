@@ -302,7 +302,7 @@ public class menu {
         gameFrame.setResizable(false);
         gameFrame.setTitle("Adventure Quest");
 
-        JPanel mainPanel = new JPanel();
+        JPanel mainPanel = new JPanel(new BorderLayout());
         GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
         InventoryPanel inventoryPanel = new InventoryPanel();
 
@@ -316,8 +316,41 @@ public class menu {
         playerInfoPanel.add(BorderLayout.NORTH, infoArea);
         playerInfoPanel.add(BorderLayout.CENTER,inventoryPanel);
 
+        // Create a panel for the buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout());
+        // Create the label to display the current room number
+        JLabel roomLabel = new JLabel("Room: 1", SwingConstants.CENTER);
+        roomLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        buttonPanel.add(roomLabel, BorderLayout.NORTH);
+
+        // Create the buttons
+        JButton previousRoomButton = new JButton(" << ");
+        JButton nextRoomButton = new JButton(" >> ");
+
+        // Add action listeners to the buttons
+        previousRoomButton.addActionListener(e -> {
+            gamePanel.previousRoom();
+            roomLabel.setText("Room: " + (gamePanel.getCurrentRoomIndex() + 1));
+        });
+        nextRoomButton.addActionListener(e -> {
+            gamePanel.nextRoom();
+            roomLabel.setText("Room: " + (gamePanel.getCurrentRoomIndex() + 1));
+        });
+
+        // Add the buttons to the panel
+        JPanel buttons = new JPanel(new GridLayout(1, 2)); // 1 row, 2 columns
+        buttons.add(previousRoomButton);
+        buttons.add(nextRoomButton);
+        buttonPanel.add(buttons, BorderLayout.SOUTH);
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setLayout(new BorderLayout());
+        sidePanel.add(playerInfoPanel, BorderLayout.CENTER);
+        sidePanel.add(buttonPanel, BorderLayout.SOUTH);
+
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(BorderLayout.EAST, playerInfoPanel);
+        mainPanel.add(BorderLayout.EAST, sidePanel); //player info panel
         mainPanel.add(BorderLayout.CENTER,gamePanel);
 
         gameFrame.add(mainPanel);

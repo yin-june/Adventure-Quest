@@ -76,13 +76,13 @@ public class Dungeon {
         return rooms[currentRoom];
     }
 
-    public void moveNorth() {
+    public void nextRoom() {
         if (currentRoom < rooms.length - 1) {
             currentRoom++;
         }
     }
 
-    public void moveSouth() {
+    public void previousRoom() {
         if (currentRoom > 0) {
             currentRoom--;
         }

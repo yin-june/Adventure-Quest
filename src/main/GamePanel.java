@@ -27,9 +27,6 @@ public class GamePanel extends JPanel implements Runnable{
     Item item; 
     Monster monster;
     BufferedImage background; 
-
-    // Timer variable to track the last time monsters were updated
-    //private long lastMonsterUpdateTime = 0;
     
     public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
@@ -38,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.requestFocusInWindow(); //request focus when it is created and when room changes 
 
         dungeon = new Dungeon(3);
 
@@ -131,13 +129,25 @@ public class GamePanel extends JPanel implements Runnable{
         g2.dispose();
         
     }
-
-    // private void updateRoomLabel() {
-    //     roomLabel.setText("Current Room: " + dungeon.getCurrentRoom());
-    // }
     
     public Hero getPlayer(){
         return player;
+    }
+
+    public void nextRoom() {
+        dungeon.nextRoom();
+        this.requestFocusInWindow(); //request focus when room changes
+        repaint();
+    }
+
+    public void previousRoom() {
+        dungeon.previousRoom();
+        this.requestFocusInWindow(); //request focus when room changes
+        repaint();
+    }
+
+    public int getCurrentRoomIndex() {
+        return dungeon.getCurrentRoomIndex();
     }
 
  }
