@@ -150,4 +150,26 @@ public class GamePanel extends JPanel implements Runnable{
         return dungeon.getCurrentRoomIndex();
     }
 
+    public Monster checkMonsterCollision(Hero hero) {
+        Room currentRoom = dungeon.getCurrentRoom();
+        if (currentRoom != null) {
+            Monster monster = currentRoom.getMonster();
+            if (monster != null && hero.getBounds().intersects(monster.getBounds())) {
+                return monster;
+            }
+        }
+        return null;
+    }
+
+    public void removeMonster(Monster monster) {
+        Room currentRoom = dungeon.getCurrentRoom();
+        if (currentRoom != null) {
+            currentRoom.setMonster(null);
+        }
+    }
+
+    public void endGame() {
+        JOptionPane.showMessageDialog(this, "Game Over!");
+        System.exit(0);
+    }
  }

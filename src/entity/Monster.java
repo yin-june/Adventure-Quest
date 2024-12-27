@@ -1,8 +1,9 @@
 package entity;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Random; 
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage; 
+import java.util.Random;
 import main.GamePanel;
 
 public abstract class Monster extends entity {
@@ -121,6 +122,10 @@ public abstract class Monster extends entity {
                 break;
         }
         g2.drawImage(image, x, y, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, null);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, GamePanel.TILE_SIZE/2, GamePanel.TILE_SIZE/2);
     }
     
 }

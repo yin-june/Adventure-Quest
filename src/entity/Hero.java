@@ -1,8 +1,9 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import main.*; 
+import main.*;
 
 public abstract class Hero extends entity {
     GamePanel gp;
@@ -11,6 +12,7 @@ public abstract class Hero extends entity {
     private int attackPower;
     private int hp;
     private String heroType;
+
     //BufferedImage upImage, downImage, leftImage, rightImage;
 
     public Hero(GamePanel gp, KeyHandler keyH, String name, int attackPower, int hp, String heroType) {
@@ -47,6 +49,12 @@ public abstract class Hero extends entity {
         } else if (keyH.rightPressed && x<(GamePanel.SCREEN_WIDTH - 40)) {
             direction = "right";
             x += speed;
+        }
+        
+        // check for collision with monsters 
+        Monster monster = gp.checkMonsterCollision(this);
+        if (monster != null) {
+            new Battle(this, monster, gp).startBattle();
         }
     }
      public void draw(Graphics2D g2) {
@@ -102,7 +110,7 @@ public abstract class Hero extends entity {
         this.heroType = heroType;
     }
     
-    public void attack(Hero target) {
+    public void attack(Monster target) {
         target.takeDamage(this.attackPower);
     }
 
@@ -122,6 +130,10 @@ public abstract class Hero extends entity {
                 "\nHero Type: "+heroType+ 
                 "\nHP: " +hp+
                 "\nAttack Power: "+ attackPower; 
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, GamePanel.TILE_SIZE/2, GamePanel.TILE_SIZE/2);
     }
 
 }

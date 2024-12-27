@@ -13,6 +13,10 @@ public class Room {
         this.item = item; 
         this.backgroundImage = backgroundImage;
     }
+
+    public void setMonster(Monster monster){
+        this.monster = monster; 
+    }
     
     public Monster getMonster(){
         return monster; 
