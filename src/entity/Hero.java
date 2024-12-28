@@ -126,13 +126,14 @@ public abstract class Hero extends entity {
     
     public boolean isAlive() {
         return this.hp > 0;
-    }
-    
+        }
+        
     public String displayStats(){
-        return "Name: "+ name + 
+        return "Level: " + gp.getDifficulty() +
+                "\nName: "+ name + 
                 "\nHero Type: "+heroType+ 
                 "\nHP: " +hp+
-                "\nAttack Power: "+ attackPower; 
+                "\nAttack Power: "+ attackPower;
     }
 
     public Rectangle getBounds() {
