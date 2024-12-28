@@ -57,6 +57,7 @@ public abstract class Hero extends entity {
             new Battle(this, monster, gp).startBattle();
         }
     }
+
      public void draw(Graphics2D g2) {
         BufferedImage image = null;
 
@@ -136,4 +137,11 @@ public abstract class Hero extends entity {
         return new Rectangle(x, y, GamePanel.TILE_SIZE/2, GamePanel.TILE_SIZE/2);
     }
 
+    public void moveToSafeLocation() {
+        x = 0;
+        y = 100;
+    }
+
+    
+    
 }

@@ -54,7 +54,6 @@ public class GamePanel extends JPanel implements Runnable{
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
 
-        //item = new Item(this,"dagger"); 
     }
 
     public void startGameThread(){
@@ -168,8 +167,16 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    public void updateHeroPosition(Hero player) {
+        Room currentRoom = dungeon.getCurrentRoom();
+        if (currentRoom != null) {
+            currentRoom.setHero(player);
+        }
+    }
+
     public void endGame() {
         JOptionPane.showMessageDialog(this, "Game Over!");
         System.exit(0);
     }
+
  }
