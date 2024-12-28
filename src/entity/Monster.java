@@ -12,6 +12,7 @@ public abstract class Monster extends entity {
     int attackPower;
     private long lastDirectionUpdateTime = 0; //time variable for direction update 
 
+    // default values 
     public Monster(String type, int hp, int attackPower) {
         this.type = type;
         this.hp = hp;
@@ -126,6 +127,11 @@ public abstract class Monster extends entity {
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, GamePanel.TILE_SIZE/2, GamePanel.TILE_SIZE/2);
+    }
+
+    public void update(long currentTime) {
+        updateDirection(currentTime);
+        move();
     }
     
 }

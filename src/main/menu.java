@@ -241,7 +241,7 @@ public class menu {
             public void actionPerformed(ActionEvent e) {
                 ChooseYourGameLevelFrame.setVisible(false);
                 try {
-                    GameFrame();
+                    GameFrame("Easy");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -253,7 +253,7 @@ public class menu {
             public void actionPerformed(ActionEvent e) {
                 ChooseYourGameLevelFrame.setVisible(false);
                 try {
-                    GameFrame();
+                    GameFrame("Medium");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -265,7 +265,7 @@ public class menu {
             public void actionPerformed(ActionEvent e) {
                 ChooseYourGameLevelFrame.setVisible(false);
                 try {
-                    GameFrame();
+                    GameFrame("Difficult");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -297,13 +297,13 @@ public class menu {
         ChooseYourGameLevelFrame.setResizable(false);
     }
 
-    public void GameFrame() throws IOException {
+    public void GameFrame(String difficulty) throws IOException {
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setResizable(false);
         gameFrame.setTitle("Adventure Quest");
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType);
+        GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType, difficulty);
         InventoryPanel inventoryPanel = new InventoryPanel();
 
         JPanel playerInfoPanel = new JPanel();

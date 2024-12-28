@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     Monster monster;
     BufferedImage background; 
     
-    public GamePanel(String name, int hp, int attackPower, String heroType) throws IOException{
+    public GamePanel(String name, int hp, int attackPower, String heroType, String difficulty) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         //this.setBackground(Color.BLACK);
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.requestFocusInWindow(); //request focus when it is created and when room changes 
 
-        dungeon = new Dungeon(3);
+        dungeon = new Dungeon(3, difficulty);
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -111,9 +111,13 @@ public class GamePanel extends JPanel implements Runnable{
                 g2.drawImage(backgroundImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, null);
             }
 
-            Monster currentMonster = currentRoom.getMonster();
-            if (currentMonster != null) {
-                currentMonster.draw(g2); // Draw the monster at its position
+            Monster[] currentMonsters = currentRoom.getMonsters();
+            if (currentMonsters != null) {
+                for (Monster monster : currentMonsters) {
+                    if (monster != null) {
+                        monster.draw(g2); // Draw each monster at its position
+                    }
+                }
             }
 
             Item currentItem = currentRoom.getItem();
@@ -151,9 +155,11 @@ public class GamePanel extends JPanel implements Runnable{
     public Monster checkMonsterCollision(Hero hero) {
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {
-            Monster monster = currentRoom.getMonster();
-            if (monster != null && hero.getBounds().intersects(monster.getBounds())) {
-                return monster;
+            Monster[] monsters = currentRoom.getMonsters();
+            for (Monster monster : monsters) {
+                if (monster != null && hero.getBounds().intersects(monster.getBounds())) {
+                    return monster;
+                }
             }
         }
         return null;
@@ -162,7 +168,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void removeMonster(Monster monster) {
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {
-            currentRoom.setMonster(null);
+            currentRoom.removeMonster(monster);
         }
         this.requestFocusInWindow(); //request focus when monster is defeated
         this.keyH.resetKeys(); // reset key press state

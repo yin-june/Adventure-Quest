@@ -4,23 +4,32 @@ import entity.*;
 import java.awt.image.BufferedImage;
 
 public class Room {
-    private Monster monster; 
+    private Monster[] monsters; 
     private Item item; 
     private Hero hero;
     private BufferedImage backgroundImage;
     
-    public Room(Monster monster, Item item, BufferedImage backgroundImage){
-        this.monster = monster; 
+    public Room(Monster[] monsters, Item item, BufferedImage backgroundImage){
+        this.monsters = monsters; 
         this.item = item; 
         this.backgroundImage = backgroundImage;
     }
 
-    public void setMonster(Monster monster){
-        this.monster = monster; 
-    }
+    // public void setMonster(Monster monster){
+    //     this.monsters = monster; 
+    // }
     
-    public Monster getMonster(){
-        return monster; 
+    public Monster[] getMonsters(){
+        return monsters; 
+    }
+
+    public void removeMonster(Monster monster) {
+        for (int i = 0; i < monsters.length; i++) {
+            if (monsters[i] == monster) {
+                monsters[i] = null;
+                break;
+            }
+        }
     }
 
     public void setHero(Hero hero){
@@ -41,5 +50,14 @@ public class Room {
 
     public BufferedImage getBackgroundImage() {
         return backgroundImage;
+    }
+
+
+    public void updateMonsters(long currentTime) {
+        for (Monster monster : monsters) {
+            if (monster != null) {
+                monster.update(currentTime);
+            }
+        }
     }
 }

@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 public class Dungeon {
     private Room[] rooms;
     private int currentRoom;
+    private String difficulty;
 
-    public Dungeon(int size) {
+    public Dungeon(int size, String difficulty) {
+        this.difficulty = difficulty;
         rooms = new Room[size];
         generateDungeon();
         currentRoom = 0; // Start at the first room
@@ -19,30 +21,64 @@ public class Dungeon {
     private void generateDungeon() {
         Random rand = new Random();
         for (int i = 0; i < rooms.length; i++) {
-            Monster monster = generateMonster();
-            monster.setPosition(rand.nextInt(48, GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT -50 ));
-            monster.setDirection(rand.nextBoolean() ? "left" : "right");
+            Monster[] monsters = generateMonsters();
+            for (Monster monster : monsters) {
+                monster.setPosition(rand.nextInt(48, GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT - 50));
+                monster.setDirection(rand.nextBoolean() ? "left" : "right");
+            }
 
             Item item = generateItem();
             BufferedImage backgroundImage = generateBackgroundImage();
 
-            rooms[i] = new Room(monster, item, backgroundImage);
+            rooms[i] = new Room(monsters, item, backgroundImage);
             
         }
     }
 
-    private Monster generateMonster(){
+    private Monster[] generateMonsters() {
+        int num;
+        int hp; //added hp 
+        int attackPower; // added attackPower
+
+        switch (difficulty) {
+            case "Easy":
+                num = 1;
+                hp = -20;
+                attackPower = -10;
+                break;
+            case "Medium":
+                num = 2;
+                hp = 0;
+                attackPower = 0;
+                break;
+            case "Difficult":
+                num = 3;
+                hp = 30;
+                attackPower = 20;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid difficulty level: " + difficulty);
+        }
+
+        Monster[] monsters = new Monster[num];
+        for (int i = 0; i < num; i++) {
+            monsters[i] = generateMonster(hp, attackPower);
+        }
+        return monsters;
+    }
+
+    private Monster generateMonster(int hp, int attackPower){
         Random r =new Random(); 
         int monsterType = r.nextInt(3); 
         switch(monsterType){
             case 0: 
-                return new Goblin();
+                return new Goblin(hp, attackPower);
             case 1: 
-                return new Skeleton(); 
+                return new Skeleton(hp, attackPower); 
             case 2: 
-                return new Zombie(); 
+                return new Zombie(hp, attackPower); 
             default:
-                return new Goblin(); //default to goblin if something goes wrong 
+                throw new IllegalArgumentException("Invalid monster type");
                 
         }
     }
@@ -92,12 +128,11 @@ public class Dungeon {
         return currentRoom;
     }
 
+    // update the monsters in the current room
     public void updateMonster(long currentTime) {
-        for (Room room : rooms) {
-            if (room != null && room.getMonster() != null) {
-                room.getMonster().move();
-                room.getMonster().updateDirection(currentTime);
-            }
+        Room currentRoom = getCurrentRoom();
+        if (currentRoom != null) {
+            currentRoom.updateMonsters(currentTime);
         }
     }
     

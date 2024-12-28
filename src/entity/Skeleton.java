@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Skeleton extends Monster{
-    public Skeleton(){
-        super("Skeleton", 30, 10); 
+    public Skeleton(int hp, int attackPower){
+        super("Skeleton", 50+hp, 20+attackPower); //type, HP, attackPower
         getMonsterImage();
     }
 
