@@ -23,7 +23,6 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread; 
     Hero player; 
     Dungeon dungeon;
-    JLabel roomLabel;
     Item item; 
     Monster monster;
     BufferedImage background; 
@@ -165,6 +164,8 @@ public class GamePanel extends JPanel implements Runnable{
         if (currentRoom != null) {
             currentRoom.setMonster(null);
         }
+        this.requestFocusInWindow(); //request focus when monster is defeated
+        this.keyH.resetKeys(); // reset key press state
     }
 
     public void updateHeroPosition(Hero player) {
@@ -172,6 +173,8 @@ public class GamePanel extends JPanel implements Runnable{
         if (currentRoom != null) {
             currentRoom.setHero(player);
         }
+        this.requestFocusInWindow(); //request focus when hero moves
+        this.keyH.resetKeys(); // request key press state 
     }
 
     public void endGame() {

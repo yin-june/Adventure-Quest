@@ -3,6 +3,7 @@ package entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 import main.*;
 
 public abstract class Hero extends entity {
@@ -54,6 +55,7 @@ public abstract class Hero extends entity {
         // check for collision with monsters 
         Monster monster = gp.checkMonsterCollision(this);
         if (monster != null) {
+            JOptionPane.showMessageDialog(null, "You encountered a "+ monster.getType() + "!");
             new Battle(this, monster, gp).startBattle();
         }
     }

@@ -44,5 +44,13 @@ public class KeyHandler implements KeyListener{
             rightPressed = false; 
         }
     }
+
+    // method to reset the key press state
+    public void resetKeys() {
+        upPressed = false;
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
+    }
     
 }

@@ -20,7 +20,7 @@ public class Dungeon {
         Random rand = new Random();
         for (int i = 0; i < rooms.length; i++) {
             Monster monster = generateMonster();
-            monster.setPosition(rand.nextInt(GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT -50 ));
+            monster.setPosition(rand.nextInt(48, GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT -50 ));
             monster.setDirection(rand.nextBoolean() ? "left" : "right");
 
             Item item = generateItem();
