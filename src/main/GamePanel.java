@@ -3,8 +3,6 @@ package main;
 import entity.*; 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.Objects;
 import javax.swing.*;
@@ -31,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
     Item item; 
     Monster monster;
     BufferedImage background; 
+    JTextArea infoArea; 
     
     public GamePanel(String name, int hp, int attackPower, String heroType, String difficulty) throws IOException{
         InventoryPanel inventoryPanel = new InventoryPanel();
@@ -58,6 +57,9 @@ public class GamePanel extends JPanel implements Runnable{
             default:
                 throw new IllegalArgumentException("Invalid hero type: " + heroType);
         }
+
+        infoArea = new JTextArea(player.displayStats());
+        infoArea.setEditable(false);
 
     }
 
@@ -101,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable{
     
     public void update(long currentTime) {
         player.update();
+        updateStatsDisplay();
         // Update monsters every frame
         dungeon.updateMonster(currentTime);
     }
@@ -211,6 +214,10 @@ public class GamePanel extends JPanel implements Runnable{
         }
         this.requestFocusInWindow(); //request focus when hero moves
         this.keyH.resetKeys(); // reset key press state 
+    }
+
+    public void updateStatsDisplay() {
+        infoArea.setText(player.displayStats());
     }
 
     public void endGame() {

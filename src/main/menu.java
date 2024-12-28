@@ -311,7 +311,7 @@ public class menu {
         playerInfoPanel.setPreferredSize(playerInfoSize);
         playerInfoPanel.setLayout(new BorderLayout());
 
-        JTextArea infoArea = new JTextArea(gamePanel.getPlayer().displayStats());
+        JTextArea infoArea = gamePanel.infoArea;
         infoArea.setEditable(false);
         playerInfoPanel.add(BorderLayout.NORTH, infoArea);
         playerInfoPanel.add(BorderLayout.CENTER,inventoryPanel);
