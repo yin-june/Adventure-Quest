@@ -55,7 +55,8 @@ public abstract class Hero extends entity {
         // check for collision with monsters 
         Monster monster = gp.checkMonsterCollision(this);
         if (monster != null) {
-            JOptionPane.showMessageDialog(null, "You encountered a "+ monster.getType() + "!");
+            JOptionPane.showMessageDialog(null, "You encountered a "+ monster.getType() + "!\n"+
+                    monster.getType() + " HP: " + monster.getHp());
             new Battle(this, monster, gp).startBattle();
         }
     }

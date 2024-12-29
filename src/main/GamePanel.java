@@ -30,9 +30,9 @@ public class GamePanel extends JPanel implements Runnable{
     Monster monster;
     BufferedImage background; 
     JTextArea infoArea; 
+    InventoryPanel inventoryPanel; 
     
     public GamePanel(String name, int hp, int attackPower, String heroType, String difficulty) throws IOException{
-        InventoryPanel inventoryPanel = new InventoryPanel();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         //this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
@@ -42,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.difficulty = difficulty;
         
         dungeon = new Dungeon(3, difficulty);
+        // initialize inventory panel 
+        inventoryPanel = new InventoryPanel(); 
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -138,15 +140,16 @@ public class GamePanel extends JPanel implements Runnable{
                     // Ensure item is removed after it has been picked up
                     if (currentRoom.getItem() != null) {
                         if (Objects.equals(currentItem.getName(), "axe")) {
-                            player.setAttackPower(player.getAttackPower() + 20);
+                            player.setAttackPower(player.getAttackPower() + 30);
                         } else if (Objects.equals(currentItem.getName(), "dagger")) {
-                            player.setAttackPower(player.getAttackPower() + 10);
+                            player.setAttackPower(player.getAttackPower() + 20);
                         } else if (Objects.equals(currentItem.getName(), "potion")) {
-                            player.setHp(player.getHp() + 20);
+                            player.setHp(player.getHp() + 40);
                         }
                         // Call displayStats() after updating the player stats
                         System.out.println(player.displayStats()); // Print updated stats (for debugging)
-
+                        // add items to inventory 
+                        inventoryPanel.addItemToInventory(currentItem.getItemImage());
 
                         // Remove the item from the room
                         currentRoom.setItem(null);
@@ -159,6 +162,10 @@ public class GamePanel extends JPanel implements Runnable{
         
         g2.dispose();
         
+    }
+    
+    public InventoryPanel getInventoryPanel(){
+        return inventoryPanel; 
     }
     
     public Hero getPlayer(){

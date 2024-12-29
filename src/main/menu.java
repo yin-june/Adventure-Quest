@@ -304,7 +304,6 @@ public class menu {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType, difficulty);
-        InventoryPanel inventoryPanel = new InventoryPanel();
 
         JPanel playerInfoPanel = new JPanel();
         Dimension playerInfoSize = new Dimension(150,-1);
@@ -314,7 +313,7 @@ public class menu {
         JTextArea infoArea = gamePanel.infoArea;
         infoArea.setEditable(false);
         playerInfoPanel.add(BorderLayout.NORTH, infoArea);
-        playerInfoPanel.add(BorderLayout.CENTER,inventoryPanel);
+        playerInfoPanel.add(BorderLayout.CENTER,gamePanel.getInventoryPanel());
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();

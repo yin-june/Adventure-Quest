@@ -37,8 +37,9 @@ public class Dungeon {
 
     private Monster[] generateMonsters() {
         int num;
-        int hp; //added hp 
-        int attackPower; // added attackPower
+        // added/deducted hp and attackPower based on difficulty level
+        int hp; 
+        int attackPower; 
 
         switch (difficulty) {
             case "Easy":

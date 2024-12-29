@@ -41,8 +41,16 @@ public abstract class Monster extends entity {
         return hp; 
     }
     
+    public void setHp(int hp){
+        this.hp = hp; 
+    }
+    
     public int getAttackPower(){
         return attackPower; 
+    }
+    
+    public void setAttackPower(int attackPower){
+        this.attackPower = attackPower; 
     }
 
     public void setPosition(int x, int y) {

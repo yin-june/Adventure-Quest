@@ -37,13 +37,16 @@ public class Battle {
     private void attack() {
         System.out.println("init Monster HP: " + monster.getHp());
         hero.attack(monster);
+        gamePanel.updateStatsDisplay();
         System.out.println("final Monster HP: " + monster.getHp());
-        JOptionPane.showMessageDialog(null, monster.getType()+ " received "+hero.getAttackPower()+" damage!");
+        JOptionPane.showMessageDialog(null, monster.getType()+ " received "+hero.getAttackPower()+" damage!\n"+
+                                    monster.getType() + " HP: " + monster.getHp());
         if (!monster.isAlive()) {
             JOptionPane.showMessageDialog(null, "You defeated the " +monster.getType()+ "!");
             gamePanel.removeMonster(monster);
         } else {
             monster.attack(hero);
+            gamePanel.updateStatsDisplay();
             System.out.println("Hero HP: " + hero.getHp());
             JOptionPane.showMessageDialog(null, "You received "+ monster.getAttackPower()+" damage!");
             if (!hero.isAlive()) {

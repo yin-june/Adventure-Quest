@@ -43,6 +43,14 @@ public class Item {
     public void setX(int x) {
         this.x = x;
     }
+    
+    public BufferedImage getItemImage() {
+        return itemImage;
+    }
+
+    public void setItemImage(BufferedImage itemImage) {
+        this.itemImage = itemImage;
+    }
 
     // 随机方向（随机位置）
     public void direction() {
@@ -66,7 +74,6 @@ public class Item {
                     break;
                 default:
                     System.out.println("Don't have this item!");
-
             }
         } catch (IOException e) {
             System.out.println("Image file not exist!");
@@ -74,6 +81,4 @@ public class Item {
         g.drawImage(itemImage, x, y, null);
 
     }
-
-
 }
