@@ -1,8 +1,11 @@
 package main;
 
 import entity.Hero;
-import entity.Monster; 
-import javax.swing.*; 
+import entity.Monster;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.*;
 
 public class Battle {
     private Hero hero; 
@@ -66,25 +69,52 @@ public class Battle {
     }
     
     private void useItem() {
-        // Let the player choose from the three items: dagger, axe, potion
-        String[] items = {"Axe", "Dagger", "Potion"};
-        int itemChoice = JOptionPane.showOptionDialog(null, "Choose an item to use:", "Use Item",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, items, items[0]);
+        // Get the inventory panel from the gamePanel instance
+        InventoryPanel inventory = gamePanel.getInventoryPanel();
+        List<String> availableItems = inventory.getItems();
 
-        switch (itemChoice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "You used an Axe!");
-                // Add logic for using a dagger
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "You used a Dagger!");
-                // Add logic for using an axe
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(null, "You used a Potion!");
-                // Add logic for using a potion
-                break;
+        if (availableItems.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You have no items to use!");
+            startBattle();
+            return;
         }
+
+        // Use a Set to remove duplicates
+        Set<String> uniqueItems = new HashSet<>(availableItems);
+        // Convert the set of unique items to an array
+        String[] itemsArray = uniqueItems.toArray(new String[0]);
+        
+        // Let the player choose from the available items
+        int itemChoice = JOptionPane.showOptionDialog(null, "Choose an item to use:", "Use Item",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, itemsArray, itemsArray[0]);
+
+        if (itemChoice == JOptionPane.CLOSED_OPTION) { 
+            startBattle();
+            return;
+        }
+
+        String selectedItem = itemsArray[itemChoice];
+        System.out.println("Selected Item: " + selectedItem); // Debugging statement
+
+        switch (selectedItem) {
+            case "axe":
+                JOptionPane.showMessageDialog(null, "You used an Axe!");
+                hero.setAttackPower(hero.getAttackPower() + 30); // Apply item effect
+                break;
+            case "dagger":
+                JOptionPane.showMessageDialog(null, "You used a Dagger!");
+                hero.setAttackPower(hero.getAttackPower() + 20); // Apply item effect
+                break;
+            case "potion":
+                JOptionPane.showMessageDialog(null, "You used a Potion!");
+                hero.setHp(hero.getHp() + 40); // Apply item effect
+                break;
+            default:
+                System.out.println("Invalid item selected!");
+                return;
+        }
+        inventory.removeItem(selectedItem); // Remove the used item from the inventory
+        gamePanel.updateStatsDisplay();
         startBattle();
     }
 }
