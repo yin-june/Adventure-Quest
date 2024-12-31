@@ -23,6 +23,8 @@ public class InventoryPanel extends JPanel {
 
         JLabel inventoryLabel = new JLabel("Inventory");
         inventoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        inventoryLabel.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 16));
+        inventoryLabel.setForeground(Color.WHITE);
 
         inventoryModel = new DefaultListModel<>();
         inventoryList = new JList<>(inventoryModel);
@@ -31,6 +33,10 @@ public class InventoryPanel extends JPanel {
         inventoryList.setCellRenderer(new ImageCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(inventoryList);
+
+        // Set background color for the panel and the list
+        this.setBackground(Color.BLACK);
+        inventoryList.setBackground(Color.GRAY);
 
         this.add(inventoryLabel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);

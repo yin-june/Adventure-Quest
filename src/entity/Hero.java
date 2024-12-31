@@ -56,7 +56,7 @@ public abstract class Hero extends entity {
         Monster monster = gp.checkMonsterCollision(this);
         if (monster != null) {
             JOptionPane.showMessageDialog(null, "You encountered a "+ monster.getType() + "!\n"+
-                    monster.getType() + " HP: " + monster.getHp());
+                    monster.getType() + " HP: " + monster.getHp(), "Monster Encounter", JOptionPane.PLAIN_MESSAGE);
             new Battle(this, monster, gp).startBattle();
         }
     }
@@ -130,11 +130,12 @@ public abstract class Hero extends entity {
         }
         
     public String displayStats(){
-        return "Level: " + gp.getDifficulty() +
+        return "~~~ Battle Status ~~~\n" + 
+                "\nLevel: " + gp.getDifficulty() + "\n" +
                 "\nName: "+ name + 
                 "\nHero Type: "+heroType+ 
                 "\nHP: " +hp+
-                "\nAttack Power: "+ attackPower;
+                "\nAttack Power: "+ attackPower +"\n";
     }
 
     public Rectangle getBounds() {

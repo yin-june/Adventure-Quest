@@ -144,29 +144,29 @@ public class menu {
 
                 try {
                     if (name.isEmpty() || HP.isEmpty() || AttackPower.isEmpty()) {
-                        JOptionPane.showMessageDialog(createHeroFrame, "The field cannot be empty!");
+                        showMessageDialog("The field cannot be empty!");
                         return;
                     }
                     if(heroType == null){
-                        JOptionPane.showMessageDialog(createHeroFrame, "You must choose your hero type!");
+                        showMessageDialog("You must choose your hero type!");
                         return;
                     }
                     heroHP = Integer.parseInt(HP);
                     heroAttackPower = Integer.parseInt(AttackPower);
                     if (heroHP < 50 || heroHP> 150) {
-                        JOptionPane.showMessageDialog(createHeroFrame, "HP value must be between 50 and 150!");
+                        showMessageDialog("HP value must be between 50 and 150!");
                         return;
                     }
                     if (heroAttackPower < 10 || heroAttackPower > 30) {
-                        JOptionPane.showMessageDialog(createHeroFrame, "Attack Power must be between 10 and 30!");
+                        showMessageDialog("Attack Power must be between 10 and 30!");
                         return;
                     }
-                        JOptionPane.showMessageDialog(createHeroFrame, "You've created your hero successfully!");
+                        showMessageDialog("You've created your hero successfully!");
                         createHeroFrame.setVisible(false);
                         ChooseYourGameLevelFrame();
 
                 }catch (NumberFormatException | IOException a){
-                    JOptionPane.showMessageDialog(createHeroFrame, "HP and Attack Power must be valid numbers!");
+                    showMessageDialog("HP and Attack Power must be valid numbers!");
                 }
             }
         });
@@ -306,12 +306,15 @@ public class menu {
         GamePanel gamePanel = new GamePanel(name, heroHP, heroAttackPower, heroType, difficulty);
 
         JPanel playerInfoPanel = new JPanel();
-        Dimension playerInfoSize = new Dimension(150,-1);
+        Dimension playerInfoSize = new Dimension(160,-1);
         playerInfoPanel.setPreferredSize(playerInfoSize);
         playerInfoPanel.setLayout(new BorderLayout());
 
         JTextArea infoArea = gamePanel.infoArea;
         infoArea.setEditable(false);
+        infoArea.setBackground(new Color(60,46,30));
+        infoArea.setForeground(Color.WHITE); 
+        infoArea.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 12));
         playerInfoPanel.add(BorderLayout.NORTH, infoArea);
         playerInfoPanel.add(BorderLayout.CENTER,gamePanel.getInventoryPanel());
 
@@ -320,12 +323,18 @@ public class menu {
         buttonPanel.setLayout(new BorderLayout());
         // Create the label to display the current room number
         JLabel roomLabel = new JLabel("Room: 1", SwingConstants.CENTER);
-        roomLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        buttonPanel.setBackground(Color.BLACK);
+        roomLabel.setForeground(Color.WHITE);
+        roomLabel.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 16));
         buttonPanel.add(roomLabel, BorderLayout.NORTH);
 
         // Create the buttons
         JButton previousRoomButton = new JButton(" << ");
         JButton nextRoomButton = new JButton(" >> ");
+        Button(previousRoomButton);
+        Button(nextRoomButton);
+        previousRoomButton.setPreferredSize(new Dimension(70, 50));
+        nextRoomButton.setPreferredSize(new Dimension(70, 50));
 
         // Add action listeners to the buttons
         previousRoomButton.addActionListener(e -> {
@@ -380,6 +389,19 @@ public class menu {
         label.setFont(new Font("ROG Fonts", Font.BOLD, 30));
         label.setForeground(Color.WHITE); // Set the color of the text
         label.setAlignmentX(Component.CENTER_ALIGNMENT); // Align the label at the center
+    }
+
+    // method to customize the appearance of the dialogs 
+    public void showMessageDialog(String message) {
+        UIManager.put("OptionPane.background", Color.BLACK);
+        UIManager.put("Panel.background", Color.BLACK);
+        UIManager.put("OptionPane.messageForeground", Color.WHITE);
+        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 14));
+        UIManager.put("Button.background", new Color(60, 46, 30));
+        UIManager.put("Button.foreground", Color.WHITE);
+        UIManager.put("Button.font", new Font("Arial", Font.BOLD, 14));
+
+        JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.PLAIN_MESSAGE);
     }
 
     /*

@@ -219,7 +219,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void endGame() {
-        JOptionPane.showMessageDialog(this, "Game Over!");
+        JOptionPane.showMessageDialog(this, "Game Over!", "Game Over", JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
     

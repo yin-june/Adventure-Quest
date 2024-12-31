@@ -54,8 +54,8 @@ public class Dungeon {
                 break;
             case "Difficult":
                 num = 3;
-                hp = 30;
-                attackPower = 20;
+                hp = 15;
+                attackPower = 15;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid difficulty level: " + difficulty);
