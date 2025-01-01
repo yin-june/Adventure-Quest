@@ -1,6 +1,6 @@
 package main;
 
-import entity.*; 
+import entity.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -8,42 +8,44 @@ import javax.swing.*;
 
 
 public class GamePanel extends JPanel implements Runnable{
-    // SCREEN SETTINGS 
-    public static final int ORIGINAL_TILE_SIZE = 16; // 16 x 16 tiles 
-    public static final int SCALE = 3; 
-    
+    // SCREEN SETTINGS
+    public static final int ORIGINAL_TILE_SIZE = 16; // 16 x 16 tiles
+    public static final int SCALE = 3;
+
     public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 48x48
-    public static final int MAX_SCREEN_COL = 16; 
+    public static final int MAX_SCREEN_COL = 16;
     public static final int MAX_SCREEN_ROW = 12;
     public static final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; // 768 pixels
     public static final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW; // 576 pixels
-    //FPS 
-    int FPS = 60; 
-    
-    KeyHandler keyH = new KeyHandler(); 
-    Thread gameThread; 
-    Hero player; 
+    //FPS
+    int FPS = 60;
+
+    KeyHandler keyH = new KeyHandler();
+    Thread gameThread;
+    Hero player;
     Dungeon dungeon;
     String difficulty;
-    Item item; 
+    Item item;
     Monster monster;
-    BufferedImage background; 
-    JTextArea infoArea; 
-    InventoryPanel inventoryPanel; 
-    Item currentItem; 
-    
+    BufferedImage background;
+    JTextArea infoArea;
+    InventoryPanel inventoryPanel;
+    Item currentItem;
+    private GameStatus gameStatus;
+    private int score = 0; // Track player score
+
     public GamePanel(String name, int hp, int attackPower, String heroType, String difficulty) throws IOException{
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         //this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.requestFocusInWindow(); //request focus when it is created and when room changes 
+        this.requestFocusInWindow(); //request focus when it is created and when room changes
         this.difficulty = difficulty;
-        
+
         dungeon = new Dungeon(3, difficulty);
-        // initialize inventory panel 
-        inventoryPanel = new InventoryPanel(); 
+        // initialize inventory panel
+        inventoryPanel = new InventoryPanel();
 
         // Initialize player based on heroType
         switch (heroType) {
@@ -63,58 +65,69 @@ public class GamePanel extends JPanel implements Runnable{
         infoArea = new JTextArea(player.displayStats());
         infoArea.setEditable(false);
 
+        // Initialize GameStatus
+        gameStatus = new GameStatus((JFrame) SwingUtilities.getWindowAncestor(this));
     }
 
     public void startGameThread(){
-        gameThread = new Thread(this); 
+        gameThread = new Thread(this);
         gameThread.start();
     }
 
     @Override
     public void run() {
-        double drawInterval = Math.pow(10,9)/FPS; // 0.01666sec 
+        double drawInterval = Math.pow(10,9)/FPS; // 0.01666sec
         double delta = 0;
-        long lastTime = System.nanoTime(); 
-        long currentTime; 
-        long timer = 0; 
-        int drawCount = 0; 
-        
+        long lastTime = System.nanoTime();
+        long currentTime;
+        long timer = 0;
+        int drawCount = 0;
+
         // game loop
         while(gameThread != null){
             //System.out.println("loop is running");
-            currentTime = System.nanoTime(); 
-            delta += (currentTime - lastTime)/ drawInterval; 
-            timer += (currentTime - lastTime); 
-            lastTime = currentTime; 
-            
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime)/ drawInterval;
+            timer += (currentTime - lastTime);
+            lastTime = currentTime;
+
             if(delta >= 1){
-                // update infomation 
+
                 update(currentTime);
-                // draw the screen with updated information 
-                repaint(); // call paint component 
-                delta--; 
-                drawCount++; 
+                repaint();
+                delta--;
+                drawCount++;
             }
             if(timer >= Math.pow(10,9)){
-                //System.out.println("FPS: " + drawCount);
-                drawCount = 0; 
-                timer = 0; 
+
+                drawCount = 0;
+                timer = 0;
             }
         }
     }
-    
+
     public void update(long currentTime) {
         player.update();
         updateStatsDisplay();
-        // Update monsters every frame
+
         dungeon.updateMonster(currentTime);
+
+
+        if (!player.isAlive()) {
+            gameStatus.showGameOver(score);
+        }
+
+
+        if (dungeon.getCurrentRoomIndex() == dungeon.getCurrentRoomIndex() - 1 && dungeon.getCurrentRoom().getMonsters().length == 0) {
+            gameStatus.showVictory(score);
+        }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        
+
         Graphics2D g2= (Graphics2D)g;
-        
+
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {
             BufferedImage backgroundImage = currentRoom.getBackgroundImage();
@@ -126,39 +139,36 @@ public class GamePanel extends JPanel implements Runnable{
             if (currentMonsters != null) {
                 for (Monster monster : currentMonsters) {
                     if (monster != null) {
-                        monster.draw(g2); // Draw each monster at its position
+                        monster.draw(g2);
                     }
                 }
             }
 
             currentItem = currentRoom.getItem();
             if (currentItem != null) {
-                currentItem.draw(g2); // Draw the item at its position
+                currentItem.draw(g2);
 
-                // Check if player collides with the item to pick it up
+
                 if (player.getBounds().intersects(new Rectangle(currentItem.getX(), currentItem.getY(), 32, 32))) {
                     if (currentRoom.getItem() != null) {
-
-                        // add items to inventory
                         inventoryPanel.addItemToInventory(currentItem.getItemImage(),currentItem.getName());
-
-                        // Remove the item from the room
                         currentRoom.setItem(null);
+                        score += 10;
                     }
                 }
             }
         }
-        
+
         player.draw(g2);
-        
+
         g2.dispose();
-        
+
     }
-    
+
     public InventoryPanel getInventoryPanel(){
-        return inventoryPanel; 
+        return inventoryPanel;
     }
-    
+
     public Hero getPlayer(){
         return player;
     }
@@ -200,6 +210,9 @@ public class GamePanel extends JPanel implements Runnable{
         Room currentRoom = dungeon.getCurrentRoom();
         if (currentRoom != null) {
             currentRoom.removeMonster(monster);
+
+            // Increase score for defeating a monster
+            score += 50;
         }
         this.requestFocusInWindow(); //request focus when monster is defeated
         this.keyH.resetKeys(); // reset key press state
@@ -211,7 +224,7 @@ public class GamePanel extends JPanel implements Runnable{
             currentRoom.setHero(player);
         }
         this.requestFocusInWindow(); //request focus when hero moves
-        this.keyH.resetKeys(); // reset key press state 
+        this.keyH.resetKeys(); // reset key press state
     }
 
     public void updateStatsDisplay() {
@@ -219,12 +232,12 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void endGame() {
-        JOptionPane.showMessageDialog(this, "Game Over!", "Game Over", JOptionPane.PLAIN_MESSAGE);
-        System.exit(0);
-    }
-    
-    public Item getCurrentItem(){
-        return currentItem; 
+        gameStatus.showGameOver(score);
     }
 
- }
+    public Item getCurrentItem(){
+        return currentItem;
+    }
+
+}
+
