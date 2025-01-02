@@ -74,7 +74,7 @@ public class Battle {
         List<String> availableItems = inventory.getItems();
 
         if (availableItems.isEmpty()) {
-            JOptionPane.showMessageDialog(null,  "You have no items to use!");
+            JOptionPane.showMessageDialog(null,  "You have no items to use!", "Inventory", JOptionPane.PLAIN_MESSAGE);
             startBattle();
             return;
         }

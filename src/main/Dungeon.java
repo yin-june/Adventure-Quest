@@ -18,6 +18,10 @@ public class Dungeon {
         currentRoom = 0; // Start at the first room
     }
 
+    public Room[] getRooms() {
+        return rooms;
+    }
+
     private void generateDungeon() {
         Random rand = new Random();
         for (int i = 0; i < rooms.length; i++) {

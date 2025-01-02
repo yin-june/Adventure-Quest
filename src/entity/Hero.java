@@ -9,7 +9,7 @@ import main.*;
 public abstract class Hero extends entity {
     GamePanel gp;
     KeyHandler keyH;
-    private String name;
+    public String name;
     private int attackPower;
     private int hp;
     private String heroType;

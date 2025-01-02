@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.*;
 
-
 public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS
     public static final int ORIGINAL_TILE_SIZE = 16; // 16 x 16 tiles
@@ -66,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
         infoArea.setEditable(false);
 
         // Initialize GameStatus
-        gameStatus = new GameStatus((JFrame) SwingUtilities.getWindowAncestor(this));
+        gameStatus = new GameStatus((JFrame) SwingUtilities.getWindowAncestor(this), player);
     }
 
     public void startGameThread(){
@@ -112,13 +111,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         dungeon.updateMonster(currentTime);
 
-
         if (!player.isAlive()) {
             gameStatus.showGameOver(score);
         }
 
-
-        if (dungeon.getCurrentRoomIndex() == dungeon.getCurrentRoomIndex() - 1 && dungeon.getCurrentRoom().getMonsters().length == 0) {
+        if (allMonstersDefeated(dungeon)) {
             gameStatus.showVictory(score);
         }
     }
@@ -147,7 +144,6 @@ public class GamePanel extends JPanel implements Runnable{
             currentItem = currentRoom.getItem();
             if (currentItem != null) {
                 currentItem.draw(g2);
-
 
                 if (player.getBounds().intersects(new Rectangle(currentItem.getX(), currentItem.getY(), 32, 32))) {
                     if (currentRoom.getItem() != null) {
@@ -216,6 +212,18 @@ public class GamePanel extends JPanel implements Runnable{
         }
         this.requestFocusInWindow(); //request focus when monster is defeated
         this.keyH.resetKeys(); // reset key press state
+    }
+
+    // Method to check if all monsters in the dungeon are defeated
+    private boolean allMonstersDefeated(Dungeon dungeon) {
+        for (Room room : dungeon.getRooms()) {
+            for (Monster monster : room.getMonsters()) {
+                if (monster != null) {
+                    return false; // If any room has monsters, return false
+                }
+            }
+        }
+        return true; 
     }
 
     public void updateHeroPosition(Hero player) {

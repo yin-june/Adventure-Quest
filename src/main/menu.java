@@ -17,6 +17,7 @@ public class menu {
     JFrame mainFrame = new JFrame("AdventureQuestGame");
     JButton enterGame = new JButton("Enter Game");
     JButton exitGame = new JButton("Exit Game");
+    JButton highScores = new JButton("High Scores");
     JFrame createHeroFrame = new JFrame("CreateYourHero");
     JFrame ChooseYourGameLevelFrame = new JFrame("ChooseYourGameLevel");
     JFrame gameFrame = new JFrame(); //game panel
@@ -80,6 +81,15 @@ public class menu {
             }
         });
 
+        Button(highScores); 
+        highScores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameStatus gameStatus = new GameStatus(mainFrame, null);
+                gameStatus.showHighScores();
+            }
+        });
+
         enterBackground = ImageIO.read(new File("src/image/dungeon1.jpg"));
 
         // Add a label for "adventure quest"
@@ -97,6 +107,8 @@ public class menu {
         enterPanel.add(enterGame);
         enterPanel.add(Box.createVerticalStrut(20)); // Increase the space between buttons
         enterPanel.add(exitGame);
+        enterPanel.add(Box.createVerticalStrut(20)); // Increase the space between buttons
+        enterPanel.add(highScores);
         enterCanvas.add(enterPanel);
         enterCanvas.repaint();
 
