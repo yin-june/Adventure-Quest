@@ -29,7 +29,7 @@ public class InventoryPanel extends JPanel {
         inventoryModel = new DefaultListModel<>();
         inventoryList = new JList<>(inventoryModel);
 
-        // 设置自定义渲染器
+        // Set the custom cell renderer for the list
         inventoryList.setCellRenderer(new ImageCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(inventoryList);
@@ -55,7 +55,7 @@ public class InventoryPanel extends JPanel {
     }
 
     public void addItemToInventory(BufferedImage itemImage, String itemName) {
-        inventoryModel.addElement(itemImage); // 添加图像到模型中
+        inventoryModel.addElement(itemImage); // add image to model
         items.add(itemName); // add item name to list
         itemImageMap.computeIfAbsent(itemName, k -> new ArrayList<>()).add(itemImage); // Map item name to image list
     }
@@ -76,7 +76,7 @@ public class InventoryPanel extends JPanel {
         repaint();
     }
 
-    // 自定义渲染器类
+    // Custom cell renderer for displaying images in the list
     private static class ImageCellRenderer extends JLabel implements ListCellRenderer<BufferedImage> {
         public ImageCellRenderer() {
             setOpaque(true);
@@ -93,13 +93,13 @@ public class InventoryPanel extends JPanel {
                 boolean cellHasFocus
         ) {
             if (value != null) {
-                // 设置图像作为标签的图标
+                // set icon 
                 setIcon(new ImageIcon(value));
             } else {
                 setIcon(null);
             }
 
-            // 设置选中状态的背景颜色
+            // Set background and foreground colors 
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());

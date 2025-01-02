@@ -44,7 +44,7 @@ public class GameStatus {
     // Method to show high scores
     public void showHighScores() {
         List<String> highScores = getHighScores();
-        StringBuilder scoresText = new StringBuilder("High Scores:\n");
+        StringBuilder scoresText = new StringBuilder("~~~~~~~ High Scores ~~~~~~~\n");
         if(highScores.isEmpty()) {
             scoresText.append("No high scores yet!\n");
         }
@@ -67,7 +67,7 @@ public class GameStatus {
                 highScores.add(line);
             }
         } catch (IOException e) { // If the file does not exist, return an empty list
-            System.err.println("Error reading high scores: " + e.getMessage());
+            System.out.println("File does not exist. No high scores yet. ");
         }
         highScores.sort((a, b) -> {
             int scoreA = Integer.parseInt(a.split(", ")[1]);
@@ -77,6 +77,7 @@ public class GameStatus {
         return highScores;
     }
 
+    // customise the look of scoreboard 
     private void scoreboard(String message) {
         UIManager.put("OptionPane.background", Color.BLACK);
         UIManager.put("Panel.background", Color.BLACK);

@@ -91,14 +91,12 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             if(delta >= 1){
-
                 update(currentTime);
                 repaint();
                 delta--;
                 drawCount++;
             }
             if(timer >= Math.pow(10,9)){
-
                 drawCount = 0;
                 timer = 0;
             }
@@ -154,11 +152,9 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
-
         player.draw(g2);
 
         g2.dispose();
-
     }
 
     public InventoryPanel getInventoryPanel(){

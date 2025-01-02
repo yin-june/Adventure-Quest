@@ -22,7 +22,10 @@ public abstract class Monster extends entity {
     }
 
     public void takeDamage(int damage) {
-        this.hp -= damage;
+        if(this.hp - damage > 0){
+            this.hp -= damage; 
+        }else 
+            this.hp = 0; 
     }
 
     public boolean isAlive() {

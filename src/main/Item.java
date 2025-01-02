@@ -10,14 +10,14 @@ import javax.swing.*;
 
 public class Item {
     private String name;
-    private int x;        // 物品的 x 坐标
-    private int y;        // 物品的 y 坐标
-    private BufferedImage itemImage; // 物品图片
+    private int x;        // x-coordinate 
+    private int y;        // y-coordinate 
+    private BufferedImage itemImage; // item image 
 
     // 构造方法
     public Item(JPanel gp, String name) throws IOException {
         this.name = name;
-        direction(); // 随机生成初始位置
+        direction(); // random direction
     }
 
     public String getName() {
@@ -52,14 +52,14 @@ public class Item {
         this.itemImage = itemImage;
     }
 
-    // 随机方向（随机位置）
+    // random direction
     public void direction() {
         Random r = new Random();
-        this.x = r.nextInt(GamePanel.SCREEN_WIDTH - 50); // 假设屏幕宽度为 768
-        this.y = r.nextInt(GamePanel.SCREEN_HEIGHT - 50); // 假设屏幕高度为 576
+        this.x = r.nextInt(GamePanel.SCREEN_WIDTH - 50); 
+        this.y = r.nextInt(GamePanel.SCREEN_HEIGHT - 50); 
     }
 
-    // 绘制物品
+    // draw item 
     public void draw(Graphics2D g) {
         try {
             switch (name){
