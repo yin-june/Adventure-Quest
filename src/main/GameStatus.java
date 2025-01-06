@@ -77,7 +77,6 @@ public class GameStatus {
         return highScores;
     }
 
-    // customise the look of scoreboard 
     private void scoreboard(String message) {
         UIManager.put("OptionPane.background", Color.BLACK);
         UIManager.put("Panel.background", Color.BLACK);
