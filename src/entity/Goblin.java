@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Goblin extends Monster{
-    public Goblin(int hp, int attackPower){
-        super("Goblin", 70+hp, 40+attackPower); //type, HP, attackPower 
+    public Goblin(int addedHp, int addedAttack){
+        super("Goblin", 70+addedHp, 40+addedAttack); //type, HP, attackPower 
         getMonsterImage();
     }
 

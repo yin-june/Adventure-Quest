@@ -38,10 +38,10 @@ public class Battle {
     }
     
     private void attack() {
-        System.out.println("init Monster HP: " + monster.getHp());
+        //System.out.println("init Monster HP: " + monster.getHp());
         hero.attack(monster);
         gamePanel.updateStatsDisplay();
-        System.out.println("final Monster HP: " + monster.getHp());
+        //System.out.println("final Monster HP: " + monster.getHp());
         JOptionPane.showMessageDialog(null, monster.getType()+ " received "+hero.getAttackPower()+" damage!\n"+
                                     monster.getType() + " HP: " + monster.getHp(), "Attack", JOptionPane.PLAIN_MESSAGE);
         if (!monster.isAlive()) {
@@ -50,7 +50,7 @@ public class Battle {
         } else {
             monster.attack(hero);
             gamePanel.updateStatsDisplay();
-            System.out.println("Hero HP: " + hero.getHp());
+            //System.out.println("Hero HP: " + hero.getHp());
             JOptionPane.showMessageDialog(null, "You received "+ monster.getAttackPower()+" damage!", "Monster Attack", JOptionPane.PLAIN_MESSAGE);
             if (!hero.isAlive()) {
                 JOptionPane.showMessageDialog(null, "You were defeated by the "+ monster.getType()+ "!", "Game Over", JOptionPane.PLAIN_MESSAGE);
@@ -94,7 +94,7 @@ public class Battle {
         }
 
         String selectedItem = itemsArray[itemChoice];
-        System.out.println("Selected Item: " + selectedItem); // Debugging statement
+        //System.out.println("Selected Item: " + selectedItem); // Debugging statement
 
         switch (selectedItem) {
             case "axe":

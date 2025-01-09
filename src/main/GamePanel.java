@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
-    public void run() {
+    public void run(){
         double drawInterval = Math.pow(10,9)/FPS; // 0.01666sec
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -103,7 +103,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    public void update(long currentTime) {
+    public void update(long currentTime){
         player.update();
         updateStatsDisplay();
 

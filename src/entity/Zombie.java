@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Zombie extends Monster{
-    public Zombie(int hp, int attackPower){
-        super("Zombie", 60+hp,30+attackPower); //type, HP, attackPower
+    public Zombie(int addedHp, int addedAttack){
+        super("Zombie", 60+addedHp,30+addedAttack); //type, HP, attackPower
         getMonsterImage();
     }
 
