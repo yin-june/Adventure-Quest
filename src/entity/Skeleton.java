@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Skeleton extends Monster{
     public Skeleton(int hp, int attackPower){
-        super("Skeleton", 50, 20); //type, HP, attackPower
+        super("Skeleton", 50+hp, 20+attackPower); //type, HP, attackPower
         getMonsterImage();
     }
 

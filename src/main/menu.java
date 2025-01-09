@@ -416,16 +416,4 @@ public class menu {
         JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.PLAIN_MESSAGE);
     }
 
-    /*
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Choose your game pattern: ");
-        System.out.println("1. Text Game");
-        System.out.println("2. GUI Game");
-        int choice = sc.nextInt();
-        if(choice == 2){
-            new game().mainFrame();
-        }
-        sc.close(); 
-    }*/
 }

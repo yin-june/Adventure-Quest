@@ -14,10 +14,6 @@ public class Room {
         this.item = item; 
         this.backgroundImage = backgroundImage;
     }
-
-    // public void setMonster(Monster monster){
-    //     this.monsters = monster; 
-    // }
     
     public Monster[] getMonsters(){
         return monsters; 

@@ -99,17 +99,17 @@ public class Battle {
         switch (selectedItem) {
             case "axe":
                 JOptionPane.showMessageDialog(null,"You used an Axe!", "Item Used", JOptionPane.PLAIN_MESSAGE);
-                JOptionPane.showMessageDialog(null, "You've gained 30 attack power!");
+                JOptionPane.showMessageDialog(null, "You've gained 30 attack power!", "Item Used", JOptionPane.PLAIN_MESSAGE);
                 hero.setAttackPower(hero.getAttackPower() + 30); 
                 break;
             case "dagger":
                 JOptionPane.showMessageDialog(null, "You used a Dagger!", "Item Used", JOptionPane.PLAIN_MESSAGE);
-                JOptionPane.showMessageDialog(null, "You've gained 20 attack power!");
+                JOptionPane.showMessageDialog(null, "You've gained 20 attack power!", "Item Used", JOptionPane.PLAIN_MESSAGE);
                 hero.setAttackPower(hero.getAttackPower() + 20); 
                 break;
             case "potion":
                 JOptionPane.showMessageDialog(null, "You used a Potion!", "Item Used", JOptionPane.PLAIN_MESSAGE);
-                JOptionPane.showMessageDialog(null, "You're healed with 50 HP!"); 
+                JOptionPane.showMessageDialog(null, "You're healed with 50 HP!", "Item Used", JOptionPane.PLAIN_MESSAGE); 
                 hero.setHp(hero.getHp() + 50); 
                 break;
             default:
