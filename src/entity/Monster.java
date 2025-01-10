@@ -84,14 +84,16 @@ public abstract class Monster extends entity {
                 break;
         }
 
-        // Ensure the monster stays within the screen bounds
-        if (x < 0) 
+        // Ensure the monster stays within the screen bounds and doesnt enter safe zone 
+        if(x < 60 && y < 150) // safe zone
+            direction = "right"; 
+        else if (x < 0) 
             x = 0;
-        if (x > GamePanel.SCREEN_WIDTH - 48) 
+        else if (x > GamePanel.SCREEN_WIDTH - 48) 
             x = GamePanel.SCREEN_WIDTH - 48;
-        if (y < 0) 
+        else if (y < 0) 
             y = 0;
-        if (y > GamePanel.SCREEN_HEIGHT - 48) 
+        else if (y > GamePanel.SCREEN_HEIGHT - 48) 
             y = GamePanel.SCREEN_HEIGHT - 48;
     }
 

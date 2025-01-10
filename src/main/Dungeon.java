@@ -27,7 +27,7 @@ public class Dungeon {
         for (int i = 0; i < rooms.length; i++) {
             Monster[] monsters = generateMonsters();
             for (Monster monster : monsters) {
-                monster.setPosition(rand.nextInt(48, GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT - 50));
+                monster.setPosition(rand.nextInt(60, GamePanel.SCREEN_WIDTH - 50), rand.nextInt(GamePanel.SCREEN_HEIGHT - 50));
                 monster.setDirection(rand.nextBoolean() ? "left" : "right");
             }
 
